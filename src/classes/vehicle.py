@@ -10,6 +10,7 @@ class Vehicle:
         self.unfinished_tasks = []
         self.finished_tasks = []
         
+        
     def add_task(self, application):
         self.unfinished_tasks.append(application)
         
@@ -24,3 +25,5 @@ class Vehicle:
     def print_vehicle_info(self):
         print(f"id: {self.id}, x: {self.x}, y: {self.y}, speed: {self.speed}, direction: {self.direction}")
     
+
+    def init_rl_agent()

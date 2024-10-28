@@ -6,7 +6,7 @@ class Task:
         self.execution_time = execution_time
         self.start_time = None
         self.end_time = None
-
+        self.execution_location = None
 
     def is_finished(self, time):
         if self.start_time + self.execution_time == time:

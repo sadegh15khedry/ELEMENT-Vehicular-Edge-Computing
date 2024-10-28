@@ -10,26 +10,13 @@ def vehicles_task_generation(vehicles):
         generate_tasks(vehicle)
 
 
-
-def q_learning_algorithm(vehicles, edge_servers):
-    print('inside q_learning_algorithm')
-        
-def task_assignmet(algorithm, vehicles, edge_servers):
-    if(algorithm == 'random'):
-        print("random")
-    elif (algorithm == 'Q-learning'):
-        print("Q-learning")
-        q_learning_algorithm(vehicles, edge_servers)
-
-
-
 def assign_new_task_to_edge_server(edge_server, time):
     if edge_server.task_queue and edge_server.runnig_task is None:
         task = edge_server.task_queue.pop(0)
         task.start_time = time
         edge_server.runnig_task = task
     
-          
+    
 def assign_new_task_in_vehicle(vehicle, time):
     if vehicle.unfinished_tasks and vehicle.unfinished_tasks is None:
         task = vehicle.unfinished_tasks.pop(0)
