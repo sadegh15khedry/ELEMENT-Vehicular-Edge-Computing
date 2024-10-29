@@ -3,7 +3,7 @@ import numpy as np
 
 class ReinforcementLearnigAgent():
     
-    def __init__(self, vehicle, nember_of_task_sizes, number_of_execution_times, max_queue_lenght):
+    def __init__(self, vehicle):
         # RL hyperparameters
         self.alpha = 0.1
         self.gamma = 0.9
@@ -12,12 +12,16 @@ class ReinforcementLearnigAgent():
         self.epsilon_decay = 0.995
         self.epsilon = 10000
         
+        nember_of_task_sizes = 3
+        number_of_execution_times = 3
+        max_queue_lenght = 10
         # Actions: 0 for local execution, 1 for offloading
         self.actions = [0, 1] # 0 for local execution and  for offloading and 
-        state = ()
-        reward = 0
-        accumulate_reward = 0
-        q_values = []
+        
+        # state = ()
+        # reward = 0
+        # accumulate_reward = 0
+        # q_values = []
         
         self.vehicle = vehicle
         self.nember_of_task_sizes = nember_of_task_sizes
@@ -72,23 +76,28 @@ class ReinforcementLearnigAgent():
         new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)
         self.q_table[state_indices][action] = new_q
     
-    def train(self):
-        # for episode in range(self.episodes):
-        state_values = self.vehicle.reset()
-        done = False
-        while not done:
-            state_indices = self.discretize_state(state_values)
-            action = self.choose_action(state_indices)
-            next_state_values, reward, done = self.vehicle.step(action)
-            next_state_indices = self.discretize_state(next_state_values)
-            self.update_q_table(state_indices, action, reward, next_state_indices)
-            state_values = next_state_values
-            # Decay epsilon
-            if self.epsilon > self.epsilon_min:
-                self.epsilon *= self.epsilon_decay
+    
+    # def train(self):
+    #     # for episode in range(self.episodes):
+    #     state_values = self.vehicle.reset()
+    #     done = False
+    #     while not done:
+    #         state_indices = self.discretize_state(state_values)
+    #         action = self.choose_action(state_indices)
+    #         next_state_values, reward, done = self.vehicle.step(action)
+    #         next_state_indices = self.discretize_state(next_state_values)
+    #         self.update_q_table(state_indices, action, reward, next_state_indices)
+    #         state_values = next_state_values
+    #         # Decay epsilon
+    #         if self.epsilon > self.epsilon_min:
+    #             self.epsilon *= self.epsilon_decay
             # Optional: Print progress
             # if (episode + 1) % 100 == 0:
             #     print(f"Episode {episode + 1}/{self.episodes}, Epsilon: {self.epsilon:.3f}")
+               
+               
+               
+               
                 
     # def find_inrange_edge_server(vehicle, edge_servers):
     #     edge_server = edge_servers[0]
