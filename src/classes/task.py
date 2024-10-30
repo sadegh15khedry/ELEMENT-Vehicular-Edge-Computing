@@ -1,7 +1,8 @@
 class Task:
-    def __init__(self, id, vehicle_id, execution_time, size):
+    def __init__(self, id, vehicle_id, relese_time, execution_time, size):
         self.id = id
-        vehicle_id = vehicle_id
+        self.vehicle_id = vehicle_id
+        self.release_time = relese_time
         self.size = size  # in MBs
         self.execution_time = execution_time
         self.start_time = None

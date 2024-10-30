@@ -26,9 +26,13 @@ class Vehicle:
         self.new_task_id += 1
         return self.new_task_id
     
-    def local_execuation_check(self):
+    def local_execuation_check(self, time):
         task = self.runnig_task
-        task.is_finished()
+        is_finished = task.is_finished(time)
+        if is_finished:
+            finished_tasks.append(task)
+            task.execution_location = 0
+            self.runnig_task = None
          
     def print_vehicle_info(self):
         print(f"id: {self.id}, x: {self.x}, y: {self.y}, speed: {self.speed}, direction: {self.direction}")

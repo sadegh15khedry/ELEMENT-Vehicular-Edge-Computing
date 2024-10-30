@@ -62,7 +62,7 @@ class Simulation:
             self.iteration_count += 1
             print(f"Iteration: {self.iteration_count} started at {iteration_start_time} ----------------------------------------------------------------")
             
-            vehicles_task_generation(self.vehicles)
+            vehicles_task_generation(self.vehicles, self.iteration_count)
             vehicle_movement_funciton(self.vehicles, self.iteration_count, self.mobilty_file)
             # manage_runnig_task(self.vehicles, self.edge_servers, self.iteration_count)
             # manage_runnig_task(self.algorithm, self.vehicles, self.edge_servers)
