@@ -5,8 +5,7 @@ import time
 from vehicle import Vehicle
 from edge_server import EdgeServer
 from vehicle_movement import load_mobility_csv, vehicle_movement_funciton
-# from task_management import manage_runnig_task
-from task_management import vehicles_task_generation
+from task_management import manage_tasks, generate_tasks
 import json
 
 class Simulation:
@@ -62,10 +61,10 @@ class Simulation:
             self.iteration_count += 1
             print(f"Iteration: {self.iteration_count} started at {iteration_start_time} ----------------------------------------------------------------")
             
-            vehicles_task_generation(self.vehicles, self.iteration_count)
+            generate_tasks(self.vehicles, self.iteration_count)
             vehicle_movement_funciton(self.vehicles, self.iteration_count, self.mobilty_file)
-            # manage_runnig_task(self.vehicles, self.edge_servers, self.iteration_count)
-            # manage_runnig_task(self.algorithm, self.vehicles, self.edge_servers)
+            manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
+
             
             time.sleep(self.time_step)
             print(f"Iteration: {self.iteration_count} started at {iteration_start_time} ----------------------------------------------------------------")

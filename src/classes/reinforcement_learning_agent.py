@@ -10,11 +10,11 @@ class ReinforcementLearnigAgent():
         self.epsilin = 1.0
         self.epsilon_min = 0.01
         self.epsilon_decay = 0.995
-        self.epsilon = 10000
+        # self.steps = 10000
         
-        nember_of_task_sizes = 3
-        number_of_execution_times = 3
-        max_queue_lenght = 10
+        self.nember_of_task_sizes = 3
+        self.number_of_execution_times = 3
+        self.max_queue_lenght = 10
         # Actions: 0 for local execution, 1 for offloading
         self.actions = [0, 1] # 0 for local execution and  for offloading and 
         
@@ -63,7 +63,12 @@ class ReinforcementLearnigAgent():
         queue_length_state = self.discretize_queue_length(state_values['queue_length'])
         return (task_size_state, execution_time_state, queue_length_state)
 
-    def choose_action(self, state_indices):
+    def choose_action(self, task, queue_lenght):#state_indices
+        # state_indices
+        state_indices = (self.discretize_task_size(task.size),
+                         self.discretize_execution_time(task.execution_time),
+                         self.discretize_queue_length(queue_lenght))
+        
         if np.random.rand() < self.epsilon:
             action = np.random.choice(self.actions)
         else:

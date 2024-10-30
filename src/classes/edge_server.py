@@ -19,19 +19,23 @@ class EdgeServer:
                 self.task_queue.append(task)
     
                 
-    def assign_new_task_to_edge_server(self, time):
+    def run_new_task(self, time):
         if self.task_queue and self.runnig_task is None:
             task = self.task_queue.pop(0)
             task.start_time = time
             self.runnig_task = task
             
-    def execuation_check(self, time):
+    def is_busy(self, time):
         task = self.runnig_task
+        if task == None:
+            return False
+        
         is_finished = task.is_finished(time)
         if is_finished:
             self.finished_tasks.append(task)
-            task.execution_location = 0
             self.runnig_task = None
+            return False
+        return True
 
 
         
