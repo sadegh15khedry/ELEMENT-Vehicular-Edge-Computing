@@ -11,11 +11,27 @@ class EdgeServer:
     def print_edge_server_info(self):
         print(f"Edge server Id: {self.id}, x:{self.x}, y:{self.y}")
 
-    def channel_check(self, time):
+
+    def check_channel(self, time):
         for task in self.channel:
             if time == task.release_time + int(task.size/task.bandwidth):
                 self.channel.remove(task)
                 self.task_queue.append(task)
+    
+                
+    def assign_new_task_to_edge_server(self, time):
+        if self.task_queue and self.runnig_task is None:
+            task = self.task_queue.pop(0)
+            task.start_time = time
+            self.runnig_task = task
+            
+    def execuation_check(self, time):
+        task = self.runnig_task
+        is_finished = task.is_finished(time)
+        if is_finished:
+            self.finished_tasks.append(task)
+            task.execution_location = 0
+            self.runnig_task = None
 
 
         
