@@ -1,9 +1,10 @@
 class EdgeServer:
-    def __init__(self, id, x, y):
+    def __init__(self, id, x, y, frequency):
         self.id = id
         self.runnig_task = None
         self.x = x
         self.y = y
+        self.frequency = frequency
         self.task_queue = []
         self.channel = []
         self.finished_tasks = []
@@ -36,9 +37,9 @@ class EdgeServer:
         
         is_finished = task.is_finished(time)
         if is_finished:
-            task.end_time = time
             self.finished_tasks.append(task)
             self.runnig_task = None
+            task.vehicle.handle_task_finish(task, time)
             print(f"task:{task.id} is finished processing on edge_server:{self.id}")
             return False
         return True

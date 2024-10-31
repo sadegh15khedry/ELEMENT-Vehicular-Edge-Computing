@@ -10,7 +10,10 @@ class ReinforcementLearnigAgent():
         self.epsilon = 1.0
         self.epsilon_min = 0.01
         self.epsilon_decay = 0.995
-        # self.steps = 10000
+        
+        self.state_indices = []
+        self.tasks = []
+        self.actions = None
         
         self.nember_of_task_sizes = 3
         self.number_of_execution_times = 3
@@ -54,58 +57,32 @@ class ReinforcementLearnigAgent():
         return (task_size_state, execution_time_state, queue_length_state)
 
     def choose_action(self, task, queue_length):#state_indices
-        # state_indices
+        
         state_indices = (self.discretize_task_size(task.size),
                          self.discretize_execution_time(task.execution_time),
                          self.discretize_queue_length(queue_length))
+        self.current_state_indices = state_indices
         
+        if self.prvious_state_indices is not None:
+            self.update_q_tabel()
+        self.prvious_state_indices = state_indices
+            
         if np.random.rand() < self.epsilon:
             action = np.random.choice(self.actions)
         else:
             np.argmax(self.q_table[state_indices])
+        self.previous_action = action #for update_q_table later
         return action
     
-    def update_q_tabel(self, state_indices, action, reward, next_state_indices):
-        current_q = self.q_table[state_indices][action]
-        max_future_q = np.max(self.q_table[next_state_indices])
+    def update_q_tabel(self):
+        reward = -self.previous_task.execution_time  # negative reward for execution time
+        current_q = self.q_table[self.prvious_state_indices][self.previous_action]
+        max_future_q = np.max(self.q_table[self.current_state_indices])
         new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)
-        self.q_table[state_indices][action] = new_q
+        self.q_table[self.prvious_state_indices][self.previous_action] = new_q
+        print(self.q_table)
     
+    def store_previous_task(self, task):
+        self.previous_task = task
+
     
-    # def train(self):
-    #     # for episode in range(self.episodes):
-    #     state_values = self.vehicle.reset()
-    #     done = False
-    #     while not done:
-    #         state_indices = self.discretize_state(state_values)
-    #         action = self.choose_action(state_indices)
-    #         next_state_values, reward, done = self.vehicle.step(action)
-    #         next_state_indices = self.discretize_state(next_state_values)
-    #         self.update_q_table(state_indices, action, reward, next_state_indices)
-    #         state_values = next_state_values
-    #         # Decay epsilon
-    #         if self.epsilon > self.epsilon_min:
-    #             self.epsilon *= self.epsilon_decay
-            # Optional: Print progress
-            # if (episode + 1) % 100 == 0:
-            #     print(f"Episode {episode + 1}/{self.episodes}, Epsilon: {self.epsilon:.3f}")
-               
-               
-               
-               
-                
-    # def find_inrange_edge_server(vehicle, edge_servers):
-    #     edge_server = edge_servers[0]
-    #     return edge_server    
-    # def manage_offloading(vehicles, edge_servers, algorithm):
-    #     if algorithm == "greedy_local":
-    #         print ("Greedy Local Offloading Algorithm")
-    #     elif algorithm == "random":
-    #         print ("Random")
-    #     elif algorithm == "greedy_offloading":
-    #         print ("Greedy Offloading Algorithm")
-    #     elif algorithm == "Q-learning":
-    #         print ("Q-Learning")
-    #         for vehicle in vehicles:
-    #             edge_server = find_inrange_edge_server(vehicle, edge_servers)
-    #             q_learning_algorithm(vehicles, edge_server)

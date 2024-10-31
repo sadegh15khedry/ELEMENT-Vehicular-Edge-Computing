@@ -1,10 +1,11 @@
 from reinforcement_learning_agent import ReinforcementLearnigAgent
 from task import Task
 class Vehicle:
-    def __init__(self, id, x, y, speed, direction):
+    def __init__(self, id, x, y, speed, direction, frequency):
         self.id = id
         self.x = x
         self.y = y
+        self.frequency = frequency
         self.new_task_id = 0
         self.speed = speed
         self.direction = direction
@@ -17,12 +18,21 @@ class Vehicle:
         
  
     def generate_task(self, time):
-        task = Task(self.get_new_task_id(), self.id, time, 5, 5)
+        task = Task(self.get_new_task_id(), self, time, 5, 5)
         self.undecided_tasks.append(task)
         task.print_task_info()
         print(f"task:{task.id} is genenrated in the vehicle:{self.id}")
         
+    def handle_task_finish(self, task, time):
+        task.end_time = time
+        self.finished_tasks.append(task)
+        self.agent.store_previous_task(task)
         
+        if task.execution_location == 0:
+            self.runnig_task = None
+        elif task.execution_location == 1:
+            self.unfinished_offload_tasks.remove(task)
+            
         
     def get_new_task_id(self):
         self.new_task_id += 1
@@ -35,9 +45,7 @@ class Vehicle:
         
         is_finished = task.is_finished(time)
         if is_finished:
-            task.end_time = time
-            self.finished_tasks.append(task)
-            self.runnig_task = None
+            self.handle_task_finish(task, time)
             print(f"task:{task.id} is finished processing on vehicle:{self.id}")
             
             return False

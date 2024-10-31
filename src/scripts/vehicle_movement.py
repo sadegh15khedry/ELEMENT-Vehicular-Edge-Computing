@@ -1,6 +1,4 @@
 
-import pandas as pd
-
 def move_vehicle(vehicle, time_step_movements): 
     vehicle_movement_info = time_step_movements[time_step_movements['vehicle_id'] == vehicle.id]
     if not vehicle_movement_info.empty:
@@ -21,6 +19,4 @@ def vehicle_movement_funciton(vehicles, time_step, mobility_file):
     for vehicle in vehicles:
         move_vehicle(vehicle, time_step_movements)
         
-def load_mobility_csv(path):
-    file = pd.read_csv(path)
-    return file
+
