@@ -34,6 +34,6 @@ def manage_tasks(vehicles, edge_servers, time):
     for edge_server in edge_servers:
         edge_server.check_channel(time)
         is_busy = edge_server.is_busy(time)
-        if(is_busy):
+        if is_busy == False:
             edge_server.run_new_task(time)
         

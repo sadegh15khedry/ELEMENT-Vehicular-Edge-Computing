@@ -35,6 +35,7 @@ class Vehicle:
         
         is_finished = task.is_finished(time)
         if is_finished:
+            task.end_time = time
             self.finished_tasks.append(task)
             self.runnig_task = None
             print(f"task:{task.id} is finished processing on vehicle:{self.id}")

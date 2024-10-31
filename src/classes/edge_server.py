@@ -6,7 +6,8 @@ class EdgeServer:
         self.y = y
         self.task_queue = []
         self.channel = []
-        self.bandwidth = 10 # ToDo update it !!!!!!!!!!!!!!
+        self.finished_tasks = []
+        self.bandwidth = 1 # ToDo update it !!!!!!!!!!!!!!
         
     def print_edge_server_info(self):
         print(f"Edge server Id: {self.id}, x:{self.x}, y:{self.y}")
@@ -35,6 +36,7 @@ class EdgeServer:
         
         is_finished = task.is_finished(time)
         if is_finished:
+            task.end_time = time
             self.finished_tasks.append(task)
             self.runnig_task = None
             print(f"task:{task.id} is finished processing on edge_server:{self.id}")
