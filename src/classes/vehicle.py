@@ -26,7 +26,7 @@ class Vehicle:
     def handle_task_finish(self, task, time):
         task.end_time = time
         self.finished_tasks.append(task)
-        self.agent.store_previous_task(task)
+        self.agent.check_if_need_to_update_q_table()
         
         if task.execution_location == 0:
             self.runnig_task = None
