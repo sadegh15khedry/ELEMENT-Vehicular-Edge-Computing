@@ -7,7 +7,7 @@ class ReinforcementLearnigAgent():
         # RL hyperparameters
         self.alpha = 0.1
         self.gamma = 0.9
-        self.epsilin = 1.0
+        self.epsilon = 1.0
         self.epsilon_min = 0.01
         self.epsilon_decay = 0.995
         # self.steps = 10000
@@ -15,20 +15,10 @@ class ReinforcementLearnigAgent():
         self.nember_of_task_sizes = 3
         self.number_of_execution_times = 3
         self.max_queue_lenght = 10
-        # Actions: 0 for local execution, 1 for offloading
-        self.actions = [0, 1] # 0 for local execution and  for offloading and 
-        
-        # state = ()
-        # reward = 0
-        # accumulate_reward = 0
-        # q_values = []
-        
         self.vehicle = vehicle
-        self.nember_of_task_sizes = nember_of_task_sizes
-        self.number_of_execution_times = number_of_execution_times
-        self.max_queue_lenght = max_queue_lenght
-        
-        self.q_table = np.zeros((nember_of_task_sizes, self.number_of_execution_times, self.max_queue_lenght, len(self.actions)))
+
+        self.actions = [0, 1] # 0 for local execution and  for offloading and 
+        self.q_table = np.zeros((self.nember_of_task_sizes, self.number_of_execution_times, self.max_queue_lenght, len(self.actions)))
         
         
     def discretize_task_size(self, task_size):
@@ -52,7 +42,7 @@ class ReinforcementLearnigAgent():
             raise ValueError(f"Invalid execution time: {execution_time}")
 
     def discretize_queue_length(self, queue_length):
-        if 0 <= queue_length <= self.max_queue_length:
+        if 0 <= queue_length and  queue_length <= self.max_queue_lenght:
             return int(queue_length)
         else:
             raise ValueError(f"Invalid queue length: {queue_length}")

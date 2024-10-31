@@ -10,7 +10,7 @@ def vehicles_task_generation(vehicles, time):
 def handle_undecided_tasks(vehicle, edge_servers):
     for task in vehicle.undecided_tasks:
         action = vehicle.agent.choose_action(task, len(vehicle.local_execution_queue))
-        vehicle.undecided.remove(task)
+        vehicle.undecided_tasks.remove(task)
         if(action == 0):
             task.execution_location = 0
             vehicle.local_execution_queue.append(task)
@@ -18,7 +18,7 @@ def handle_undecided_tasks(vehicle, edge_servers):
         elif(action == 1):
             task.execution_location = 1
             closest_edge_server = vehicle.find_closest_edge_server(edge_servers)
-            closest_edge_server.server.channel.append(task)
+            closest_edge_server.channel.append(task)
             print(f"task {task.id} has been assigned to edge server {closest_edge_server.id}")
 
 

@@ -14,7 +14,7 @@ class EdgeServer:
 
     def check_channel(self, time):
         for task in self.channel:
-            if time == task.release_time + int(task.size/task.bandwidth):
+            if time == task.release_time + int(task.size/self.bandwidth):
                 self.channel.remove(task)
                 self.task_queue.append(task)
     
