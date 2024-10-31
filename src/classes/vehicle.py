@@ -20,7 +20,8 @@ class Vehicle:
         task = Task(self.get_new_task_id(), self.id, time, 5, 5)
         self.undecided_tasks.append(task)
         task.print_task_info()
-           
+        print(f"task:{task.id} is genenrated in the vehicle:{self.id}")
+        
         
         
     def get_new_task_id(self):
@@ -36,6 +37,8 @@ class Vehicle:
         if is_finished:
             self.finished_tasks.append(task)
             self.runnig_task = None
+            print(f"task:{task.id} is finished processing on vehicle:{self.id}")
+            
             return False
         return True
          
@@ -44,6 +47,8 @@ class Vehicle:
             task = self.local_execution_queue.pop(0)
             task.start_time = time
             self.runnig_task = task
+            print(f"task:{task.id} is now processing on vehicle:{self.id}")
+            
     
     def print_vehicle_info(self):
         print(f"id: {self.id}, x: {self.x}, y: {self.y}, speed: {self.speed}, direction: {self.direction}")

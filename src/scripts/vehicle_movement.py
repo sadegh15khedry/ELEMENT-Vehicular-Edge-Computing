@@ -9,8 +9,8 @@ def move_vehicle(vehicle, time_step_movements):
     vehicle.y = vehicle_movement_info.y
     vehicle.direction = vehicle_movement_info.angle
     vehicle.speed = vehicle_movement_info.speed
-    if(vehicle.id == 1):
-        vehicle.print_vehicle_info()
+    # if(vehicle.id == 1):
+    #     vehicle.print_vehicle_info()
     
 def get_time_step_movements(time_step, mobility_file_path):
     time_step_csv = mobility_file_path[mobility_file_path['time'] == time_step]

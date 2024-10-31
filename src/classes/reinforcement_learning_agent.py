@@ -14,11 +14,11 @@ class ReinforcementLearnigAgent():
         
         self.nember_of_task_sizes = 3
         self.number_of_execution_times = 3
-        self.max_queue_lenght = 10
+        self.max_queue_length = 10
         self.vehicle = vehicle
 
         self.actions = [0, 1] # 0 for local execution and  for offloading and 
-        self.q_table = np.zeros((self.nember_of_task_sizes, self.number_of_execution_times, self.max_queue_lenght, len(self.actions)))
+        self.q_table = np.zeros((self.nember_of_task_sizes, self.number_of_execution_times, self.max_queue_length, len(self.actions)))
         
         
     def discretize_task_size(self, task_size):
@@ -42,7 +42,7 @@ class ReinforcementLearnigAgent():
             raise ValueError(f"Invalid execution time: {execution_time}")
 
     def discretize_queue_length(self, queue_length):
-        if 0 <= queue_length and  queue_length <= self.max_queue_lenght:
+        if 0 <= queue_length and  queue_length <= self.max_queue_length:
             return int(queue_length)
         else:
             raise ValueError(f"Invalid queue length: {queue_length}")
@@ -53,11 +53,11 @@ class ReinforcementLearnigAgent():
         queue_length_state = self.discretize_queue_length(state_values['queue_length'])
         return (task_size_state, execution_time_state, queue_length_state)
 
-    def choose_action(self, task, queue_lenght):#state_indices
+    def choose_action(self, task, queue_length):#state_indices
         # state_indices
         state_indices = (self.discretize_task_size(task.size),
                          self.discretize_execution_time(task.execution_time),
-                         self.discretize_queue_length(queue_lenght))
+                         self.discretize_queue_length(queue_length))
         
         if np.random.rand() < self.epsilon:
             action = np.random.choice(self.actions)

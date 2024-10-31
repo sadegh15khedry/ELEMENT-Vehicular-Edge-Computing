@@ -25,7 +25,6 @@ def handle_undecided_tasks(vehicle, edge_servers):
 
 def manage_tasks(vehicles, edge_servers, time):
 
-
     for vehicle in vehicles:
         handle_undecided_tasks(vehicle, edge_servers)
         is_busy = vehicle.is_busy(time)

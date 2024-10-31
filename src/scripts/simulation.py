@@ -9,15 +9,15 @@ from task_management import manage_tasks, generate_tasks
 import json
 
 class Simulation:
-    def __init__(self, config_file, algorithm, time_step, max_iterations, mobility_file_path):
+    def __init__(self, config_file, algorithm, time_step_length, max_iterations, mobility_file_path):
         self.config = self.load_config(config_file)
         self.edge_servers = self.initialize_edge_servers()
         self.vehicles = self.initialize_vehicles()
         self.start_time = 0
         self.finish_time = 0
         self.algorithm = algorithm
-        self.iteration_count = 0
-        self.time_step = time_step
+        self.iteration_count = 1
+        self.time_step_length = time_step_length
         self.max_iterations = max_iterations
         self.mobilty_file = load_mobility_csv(mobility_file_path)
         
@@ -55,19 +55,21 @@ class Simulation:
     def run(self):
         print("Running simulation stated!")
         self.start_time = time.time()
-
+        
+        generate_tasks(self.vehicles, self.iteration_count)
+        
         while self.iteration_count <= self.max_iterations:
             iteration_start_time = time.time()
-            self.iteration_count += 1
             print(f"Iteration: {self.iteration_count} started at {iteration_start_time} ----------------------------------------------------------------")
             
-            generate_tasks(self.vehicles, self.iteration_count)
+            # generate_tasks(self.vehicles, self.iteration_count)
             vehicle_movement_funciton(self.vehicles, self.iteration_count, self.mobilty_file)
             manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
 
             
-            time.sleep(self.time_step)
-            print(f"Iteration: {self.iteration_count} started at {iteration_start_time} ----------------------------------------------------------------")
+            time.sleep(self.time_step_length)
+            self.iteration_count += 1
+            print(f"Iteration: {self.iteration_count} ended at {iteration_start_time} ----------------------------------------------------------------")
 
         self.finish_time = time.time()
         print(f"Simulation finished! Total execution time: {self.finish_time - self.start_time} seconds.")
