@@ -29,8 +29,8 @@ class Simulation:
         
         
         while self.iteration_count <= self.max_iterations:
-            iteration_start_time = time.time()
-            print(f"Iteration: {self.iteration_count} started at {iteration_start_time} ----------------------------------------------------------------")
+            # iteration_start_time = time.time()
+            print(f"Iteration: {self.iteration_count} started  ----------------------------------------------------------------")
             
             if(self.iteration_count % 20 == 1):
                 generate_tasks(self.vehicles, self.iteration_count)
@@ -39,8 +39,8 @@ class Simulation:
 
             
             time.sleep(self.time_step_length)
-            print(f"Iteration: {self.iteration_count} ended at {iteration_start_time} ----------------------------------------------------------------")
+            print(f"Iteration: {self.iteration_count} ended ----------------------------------------------------------------")
             self.iteration_count += 1
 
-        self.finish_time = time.time()
-        print(f"Simulation finished! Total execution time: {self.finish_time - self.start_time} seconds.")
+        # self.finish_time = time.time()
+        print(f"Simulation finished! Total iterations: {self.iteration_count}.")

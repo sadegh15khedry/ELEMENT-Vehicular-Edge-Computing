@@ -20,12 +20,12 @@ class ReinforcementLearnigAgent():
         self.history = []
         
         self.nember_of_task_sizes = 3
-        self.number_of_execution_times = 3
+        self.number_of_execution_cycles = 3
         self.max_queue_length = 10
         self.vehicle = vehicle
 
         self.actions = [0, 1] # 0 for local execution and  for offloading and 
-        self.q_table = np.zeros((self.nember_of_task_sizes, self.number_of_execution_times, self.max_queue_length, len(self.actions)))
+        self.q_table = np.zeros((self.nember_of_task_sizes, self.number_of_execution_cycles, self.max_queue_length, len(self.actions)))
         
         
     def discretize_task_size(self, task_size):
@@ -38,12 +38,12 @@ class ReinforcementLearnigAgent():
         else:
             raise ValueError(f"Invalid task size: {task_size}")
         
-    def discretize_execution_time(self, execution_time):
-        if execution_time == 5:
+    def discretize_execution_cycles(self, execution_time):
+        if execution_time == 2000000:
             return 0
-        elif execution_time == 50:
+        elif execution_time == 5000000:
             return 1
-        elif execution_time == 500:
+        elif execution_time == 10000000:
             return 2
         else:
             raise ValueError(f"Invalid execution time: {execution_time}")
@@ -67,7 +67,7 @@ class ReinforcementLearnigAgent():
         
         self.counter += 1
         state_indices = (self.discretize_task_size(task.size),
-                         self.discretize_execution_time(task.execution_time),
+                         self.discretize_execution_cycles(task.execution_cycles),
                          self.discretize_queue_length(queue_length))
         
         
@@ -90,7 +90,7 @@ class ReinforcementLearnigAgent():
         return action
     
     def update_q_tabel(self, before_state_indices, before_task, before_action, after_state_indices):
-        reward = -before_task.execution_time  # negative reward for execution time
+        reward = -(before_task.end_time- before_task.start_time)  # negative reward for execution time
         current_q = self.q_table[before_state_indices][before_action]
         max_future_q = np.max(self.q_table[after_state_indices])
         new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)

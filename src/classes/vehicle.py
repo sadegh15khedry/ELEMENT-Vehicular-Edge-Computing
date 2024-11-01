@@ -18,7 +18,7 @@ class Vehicle:
         
  
     def generate_task(self, time):
-        task = Task(self.get_new_task_id(), self, time, 5, 5)
+        task = Task(self.get_new_task_id(), self, time, 5000000, 5)
         self.undecided_tasks.append(task)
         task.print_task_info()
         print(f"task:{task.id} is genenrated in the vehicle:{self.id}")
