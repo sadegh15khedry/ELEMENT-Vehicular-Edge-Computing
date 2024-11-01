@@ -9,6 +9,7 @@ class Vehicle:
         self.new_task_id = 0
         self.speed = speed
         self.direction = direction
+        self.transition_power = 10
         self.runnig_task = None
         self.local_execution_queue = []
         self.unfinished_offload_tasks = []

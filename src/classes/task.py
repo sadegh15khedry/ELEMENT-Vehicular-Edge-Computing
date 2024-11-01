@@ -1,3 +1,4 @@
+import math
 class Task:
     def __init__(self, id, vehicle, relese_time, execution_cycles, size):
         self.id = id
@@ -21,5 +22,12 @@ class Task:
         print(f"Task ID: {self.id}, Execution Time: {self.execution_time} seconds")
 
     def set_execution_time(self, frequency):
-        self.execution_time = (self.execution_cycles  / frequency) * 1000  # in milicseconds
+        self.execution_time = (self.execution_cycles  / frequency) * 1000
+        self.execution_time = math.ceil(self.execution_time)# in milicseconds
         print(f"Execution Time: {self.execution_time} miliseconds")
+        
+    def add_transmission_energy(self, trasmission_power, bandwidth):
+        self.energy += (trasmission_power * self.size) / bandwidth  # in Joules
+        
+    def add_execution_energy(self, frequency):
+        self.energy += (10**-28)*(frequency ** 2)*(self.execution_cycles) # in Joules

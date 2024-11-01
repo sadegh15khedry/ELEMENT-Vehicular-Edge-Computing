@@ -14,13 +14,18 @@ def handle_undecided_tasks(vehicle, edge_servers):
         if(action == 0):
             task.execution_location = 0
             task.set_execution_time(vehicle.frequency)
+            task.add_execution_energy(vehicle.frequency)
+            print(f"task energy {task.energy} ")
             vehicle.local_execution_queue.append(task)
             print(f"task {task.id} has been assigned to local")
         elif(action == 1):
-            task.execution_location = 1
+            print(f"task energy {task.energy} ")
             vehicle.unfinished_offload_tasks.append(task)
             closest_edge_server = vehicle.find_closest_edge_server(edge_servers)
+            task.execution_location = 1
             task.set_execution_time(closest_edge_server.frequency)
+            task.add_transmission_energy(vehicle.transmission_power, closest_edge_server.bandwidth)
+            task.add_execution_energy(closest_edge_server.frequency)
             closest_edge_server.channel.append(task)
             print(f"task {task.id} has been assigned to edge server {closest_edge_server.id}")
 

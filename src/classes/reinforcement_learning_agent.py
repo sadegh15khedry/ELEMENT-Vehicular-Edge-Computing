@@ -90,7 +90,7 @@ class ReinforcementLearnigAgent():
         return action
     
     def update_q_tabel(self, before_state_indices, before_task, before_action, after_state_indices):
-        reward = -(before_task.end_time- before_task.start_time)  # negative reward for execution time
+        reward = -0.5*(before_task.end_time- before_task.start_time)- 0.5 * before_task.energy  # negative reward for execution time
         current_q = self.q_table[before_state_indices][before_action]
         max_future_q = np.max(self.q_table[after_state_indices])
         new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)
