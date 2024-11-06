@@ -1,5 +1,5 @@
 class EdgeServer:
-    def __init__(self, id, x, y, frequency):
+    def __init__(self, id, x, y, frequency, bandwidth):
         self.id = id
         self.runnig_task = None
         self.x = x
@@ -8,7 +8,7 @@ class EdgeServer:
         self.task_queue = []
         self.channel = []
         self.finished_tasks = []
-        self.bandwidth = 1 # ToDo update it !!!!!!!!!!!!!!
+        self.bandwidth = bandwidth # ToDo update it !!!!!!!!!!!!!!
         
     def print_edge_server_info(self):
         print(f"Edge server Id: {self.id}, x:{self.x}, y:{self.y}")

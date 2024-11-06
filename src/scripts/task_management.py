@@ -2,10 +2,13 @@
 def generate_tasks(vehicles, time):
     for vehicle in vehicles:
         vehicle.generate_task(time)
+ 
+
     
 def vehicles_task_generation(vehicles, time):
+    task_type = 0
     for vehicle in vehicles:
-        vehicle.generate_task(time)
+        vehicle.generate_task(time, task_type % 3)
 
 def handle_undecided_tasks(vehicle, edge_servers):
     for task in vehicle.undecided_tasks:

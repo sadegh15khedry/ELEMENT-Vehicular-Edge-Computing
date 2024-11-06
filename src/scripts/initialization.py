@@ -9,11 +9,12 @@ def load_config(config_file):
         return json.load(file)
 
     
-def initialize_edge_servers(config):
+def initialize_edge_servers(edge_server_file):
+    config = load_config(edge_server_file)
     edge_servers = []
     for edge_server_config in config['edge_servers']:
         edge_server = EdgeServer(edge_server_config['id'], edge_server_config['x'],
-                                     edge_server_config['y'],edge_server_config['frequency'])
+                                     edge_server_config['y'],edge_server_config['frequency'], edge_server_config['bandwidth'])
             
         print(f"Edge Server id: {edge_server.id}, x: {edge_server.x} y: {edge_server.y}")
 
@@ -23,7 +24,8 @@ def initialize_edge_servers(config):
     
 
     
-def initialize_vehicles(config):
+def initialize_vehicles(vehicle_file_path):
+    config = load_config(vehicle_file_path)
     vehicles = []
     for vehicle_config in config['vehicles']:
         vehicle = Vehicle(vehicle_config['id'], vehicle_config['x'], vehicle_config['y'],
