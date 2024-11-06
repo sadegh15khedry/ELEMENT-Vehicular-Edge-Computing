@@ -9,20 +9,50 @@ class Vehicle:
         self.new_task_id = 0
         self.speed = speed
         self.direction = direction
-        self.transition_power = 100*(10**-1)
+        self.transmission_power = 100*(10**-3)
         self.runnig_task = None
         self.local_execution_queue = []
         self.unfinished_offload_tasks = []
         self.undecided_tasks = []
         self.finished_tasks = []
         self.agent = ReinforcementLearnigAgent(self)
+        self.last_task_type = 0
         
  
     def generate_task(self, time):
-        task = Task(self.get_new_task_id(), self, time, 5000000, 5)
+        if self.last_task_type % 9 == 0:
+            size = 2000000
+            cycle = 2000000
+        elif self.last_task_type % 9 == 1:
+            size = 5000000
+            cycle = 5000000
+        elif self.last_task_type % 9 == 2:
+            size = 7000000
+            cycle = 7000000
+        elif self.last_task_type % 9 == 3:
+            size = 2000000
+            cycle = 2000000
+        elif self.last_task_type % 9 == 4:
+            size = 5000000
+            cycle = 5000000
+        elif self.last_task_type % 9 == 5:
+            size = 7000000
+            cycle = 7000000
+        elif self.last_task_type % 9 == 6:
+            size = 2000000
+            cycle = 2000000
+        elif self.last_task_type % 9 == 7:
+            size = 5000000
+            cycle = 5000000
+        elif self.last_task_type % 9 == 8:
+            size = 7000000
+            cycle = 7000000
+            
+        task = Task(self.get_new_task_id(), self, time, cycle, size)
         self.undecided_tasks.append(task)
-        task.print_task_info()
-        print(f"task:{task.id} is genenrated in the vehicle:{self.id}")
+        # task.print_task_info()
+        self.last_task_type += 1
+        # print(f"task:{task.id} is genenrated in the vehicle:{self.id}")
         
     def handle_task_finish(self, task, time):
         task.end_time = time
@@ -47,7 +77,7 @@ class Vehicle:
         is_finished = task.is_finished(time)
         if is_finished:
             self.handle_task_finish(task, time)
-            print(f"task:{task.id} is finished processing on vehicle:{self.id}")
+            # print(f"task:{task.id} is finished processing on vehicle:{self.id}")
             
             return False
         return True
@@ -57,12 +87,12 @@ class Vehicle:
             task = self.local_execution_queue.pop(0)
             task.start_time = time
             self.runnig_task = task
-            print(f"task:{task.id} is now processing on vehicle:{self.id}")
+            # print(f"task:{task.id} is now processing on vehicle:{self.id}")
             
     
-    def print_vehicle_info(self):
-        print(f"id: {self.id}, x: {self.x}, y: {self.y}, speed: {self.speed}, direction: {self.direction}")
-        print(f"undecided tasks count: {len(self.undecided_tasks)}")
+    # def print_vehicle_info(self):
+    #     print(f"id: {self.id}, x: {self.x}, y: {self.y}, speed: {self.speed}, direction: {self.direction}")
+    #     print(f"undecided tasks count: {len(self.undecided_tasks)}")
     
         
     def find_closest_edge_server(self, edge_servers):

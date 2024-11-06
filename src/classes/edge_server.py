@@ -8,10 +8,10 @@ class EdgeServer:
         self.task_queue = []
         self.channel = []
         self.finished_tasks = []
-        self.bandwidth = bandwidth # ToDo update it !!!!!!!!!!!!!!
+        self.bandwidth = bandwidth 
         
-    def print_edge_server_info(self):
-        print(f"Edge server Id: {self.id}, x:{self.x}, y:{self.y}")
+    # def print_edge_server_info(self):
+    #     print(f"Edge server Id: {self.id}, x:{self.x}, y:{self.y}")
 
 
     def check_channel(self, time):
@@ -19,7 +19,7 @@ class EdgeServer:
             if time == task.release_time + int(task.size/self.bandwidth):
                 self.channel.remove(task)
                 self.task_queue.append(task)
-                print (f"task:{task.id} has been reached edge_server:{self.id}")
+                # print (f"task:{task.id} has been reached edge_server:{self.id}")
     
                 
     def run_new_task(self, time):
@@ -27,7 +27,7 @@ class EdgeServer:
             task = self.task_queue.pop(0)
             task.start_time = time
             self.runnig_task = task
-            print (f"task:{task.id} is now runnig on edge_server:{self.id}")
+            # print (f"task:{task.id} is now runnig on edge_server:{self.id}")
             
             
     def is_busy(self, time):
@@ -40,7 +40,7 @@ class EdgeServer:
             self.finished_tasks.append(task)
             self.runnig_task = None
             task.vehicle.handle_task_finish(task, time)
-            print(f"task:{task.id} is finished processing on edge_server:{self.id}")
+            # print(f"task:{task.id} is finished processing on edge_server:{self.id}")
             return False
         return True
 

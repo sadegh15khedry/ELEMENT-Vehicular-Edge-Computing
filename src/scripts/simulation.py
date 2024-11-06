@@ -1,6 +1,7 @@
 import sys
 import os
 import time
+import numpy as np
 
 from vehicle_movement import vehicle_movement_funciton
 from task_management import manage_tasks, generate_tasks
@@ -20,7 +21,16 @@ class Simulation:
         self.mobilty_file = load_mobility_csv(mobility_file_path)
         
     
-    
+    def save_q_table(self, q_table):
+        np.save('../results/q_table/q_table.npy', q_table)
+        # print (type(q_table))
+        
+    def load_q_table(self):
+        q_table = np.load('../results/q_table/q_table.npy')
+        print(q_table)
+        return
+        
+        
     # def initialize_vehicles(self):
     def run(self):
         print("Running simulation stated!")
@@ -31,7 +41,7 @@ class Simulation:
             # iteration_start_time = time.time()
             print(f"Iteration: {self.iteration_count} started  ----------------------------------------------------------------")
             
-            if(self.iteration_count % 20 == 1):
+            if(self.iteration_count % 3 == 1):
                 generate_tasks(self.vehicles, self.iteration_count)
             vehicle_movement_funciton(self.vehicles, self.iteration_count, self.mobilty_file)
             manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
@@ -43,3 +53,6 @@ class Simulation:
 
         # self.finish_time = time.time()
         print(f"Simulation finished! Total iterations: {self.iteration_count}.")
+        if(self.mode == 'train'):
+            self.save_q_table(self.vehicles[0].agent.q_table)
+            self.load_q_table()

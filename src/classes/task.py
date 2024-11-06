@@ -18,13 +18,13 @@ class Task:
             return True
         return False
             
-    def print_task_info(self):
-        print(f"Task ID: {self.id}, Execution Time: {self.execution_time} seconds")
+    # def print_task_info(self):
+        # print(f"Task ID: {self.id}, Execution Time: {self.execution_time} seconds")
 
     def set_execution_time(self, frequency):
         self.execution_time = (self.execution_cycles  / frequency) * 1000
         self.execution_time = math.ceil(self.execution_time)# in milicseconds
-        print(f"Execution Time: {self.execution_time} miliseconds")
+        # print(f"Execution Time: {self.execution_time} miliseconds")
         
     def add_transmission_energy(self, trasmission_power, bandwidth):
         self.energy += (trasmission_power * self.size) / bandwidth  # in Joules

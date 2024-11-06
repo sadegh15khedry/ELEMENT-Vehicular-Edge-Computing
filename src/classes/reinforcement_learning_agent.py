@@ -29,11 +29,11 @@ class ReinforcementLearnigAgent():
         
         
     def discretize_task_size(self, task_size):
-        if task_size == 0.5:
+        if task_size == 2000000:
             return 0
-        elif task_size == 5:
+        elif task_size == 5000000:
             return 1
-        elif task_size == 50:
+        elif task_size == 7000000:
             return 2
         else:
             raise ValueError(f"Invalid task size: {task_size}")
@@ -43,7 +43,7 @@ class ReinforcementLearnigAgent():
             return 0
         elif execution_time == 5000000:
             return 1
-        elif execution_time == 10000000:
+        elif execution_time == 7000000:
             return 2
         else:
             raise ValueError(f"Invalid execution time: {execution_time}")
@@ -96,11 +96,11 @@ class ReinforcementLearnigAgent():
         new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)
         self.q_table[before_state_indices][before_action] = new_q
         #self.updated_state_indices_list.append(before_state_indices)
-        print(self.q_table)
+        print("Q-table updated!!!!!!!!")
         
     
     def check_if_need_to_update_q_table(self):
-        print(self.history)
+        # print(self.history)
         if len(self.history) < 2:
             return
         size = len(self.history)
