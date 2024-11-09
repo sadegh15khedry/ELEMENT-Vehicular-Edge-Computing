@@ -1,3 +1,4 @@
+import pandas as pd
 from reinforcement_learning_agent import ReinforcementLearnigAgent
 from task import Task
 class Vehicle:
@@ -96,14 +97,80 @@ class Vehicle:
     
         
     def find_closest_edge_server(self, edge_servers):
-        min_distance = float('inf')
-        closest_server = None
+        """
+        Finds and returns the closest edge server to the vehicle based on Euclidean distance.
+
+        Parameters:
+        - edge_servers (list): A list of edge server objects. Each server should have 'x' and 'y' attributes.
+
+        Returns:
+        - closest_server: The edge server object closest to the vehicle.
+        """
+        min_distance = float('inf')  # Initialize with infinity
+        closest_server = None        # Placeholder for the closest server
+
         for server in edge_servers:
-            distance = ((server.x - self.x)**2 + (server.y - self.y)**2)**0.5
+            # Extract 'x' and 'y' coordinates from the server
+            # Ensure they are scalar values, not Pandas Series or other iterable types
+
+            # Handle server.x
+            if isinstance(server.x, pd.Series):
+                if server.x.empty:
+                    raise ValueError(f"Server {server.id} has an empty 'x' value.")
+                elif server.x.size == 1:
+                    server_x = server.x.item()
+                else:
+                    raise ValueError(f"Server {server.id} has multiple 'x' values: {server.x}")
+            else:
+                server_x = server.x
+
+            # Handle server.y
+            if isinstance(server.y, pd.Series):
+                if server.y.empty:
+                    raise ValueError(f"Server {server.id} has an empty 'y' value.")
+                elif server.y.size == 1:
+                    server_y = server.y.item()
+                else:
+                    raise ValueError(f"Server {server.id} has multiple 'y' values: {server.y}")
+            else:
+                server_y = server.y
+
+            # Ensure vehicle's 'x' and 'y' are scalars
+            if isinstance(self.x, pd.Series):
+                if self.x.empty:
+                    raise ValueError(f"Vehicle {self.id} has an empty 'x' value.")
+                elif self.x.size == 1:
+                    vehicle_x = self.x.item()
+                else:
+                    raise ValueError(f"Vehicle {self.id} has multiple 'x' values: {self.x}")
+            else:
+                vehicle_x = self.x
+
+            if isinstance(self.y, pd.Series):
+                if self.y.empty:
+                    raise ValueError(f"Vehicle {self.id} has an empty 'y' value.")
+                elif self.y.size == 1:
+                    vehicle_y = self.y.item()
+                else:
+                    raise ValueError(f"Vehicle {self.id} has multiple 'y' values: {self.y}")
+            else:
+                vehicle_y = self.y
+
+            # Calculate Euclidean distance
+            distance = ((server_x - vehicle_x)**2 + (server_y - vehicle_y)**2)**0.5
+
+            # Debugging Statements (Optional)
+            # Uncomment the following lines if you need to trace the values
+            # print(f"Vehicle ({vehicle_x}, {vehicle_y}) to Server {server.id} ({server_x}, {server_y}) Distance: {distance}")
+
+            # Update the closest server if a closer one is found
             if distance < min_distance:
                 min_distance = distance
                 closest_server = server
+
         return closest_server
+
+
         
     
 
