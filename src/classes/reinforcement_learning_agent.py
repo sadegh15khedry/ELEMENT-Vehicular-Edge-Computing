@@ -2,14 +2,19 @@ import random
 import numpy as np
 
 class ReinforcementLearnigAgent():
-    
+    alpha = 0.1
+    gamma = 0.9
+    epsilon = 1.0
+    epsilon_min = 0.01
+    epsilon_decay = 0.995
+    number_of_task_sizes = 3
+    number_of_execution_cycles = 3
+    max_queue_length = 3
+    actions = [0, 1] # 0 for local execution and  for offloading and 
+    q_table = np.zeros((number_of_task_sizes, number_of_execution_cycles, max_queue_length, len(actions)))
     def __init__(self, vehicle):
         # RL hyperparameters
-        self.alpha = 0.1
-        self.gamma = 0.9
-        self.epsilon = 1.0
-        self.epsilon_min = 0.01
-        self.epsilon_decay = 0.995
+
         
         # self.updated_state_indices_list = []
         # self.not_updated_state_indices_list = []
@@ -19,13 +24,9 @@ class ReinforcementLearnigAgent():
         self.counter = 0
         self.history = []
         
-        self.nember_of_task_sizes = 3
-        self.number_of_execution_cycles = 3
-        self.max_queue_length = 3
+        
         self.vehicle = vehicle
 
-        self.actions = [0, 1] # 0 for local execution and  for offloading and 
-        self.q_table = np.zeros((self.nember_of_task_sizes, self.number_of_execution_cycles, self.max_queue_length, len(self.actions)))
         
         
     def discretize_task_size(self, task_size):
@@ -101,6 +102,8 @@ class ReinforcementLearnigAgent():
         self.q_table[before_state_indices][before_action] = new_q
         #self.updated_state_indices_list.append(before_state_indices)
         print("Q-table updated!!!!!!!!")
+        print(self.q_table)
+
         
     
     def check_if_need_to_update_q_table(self):
