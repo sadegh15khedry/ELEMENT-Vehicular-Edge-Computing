@@ -41,14 +41,12 @@ class Simulation:
             # iteration_start_time = time.time()
             print(f"Iteration: {self.iteration_count} started  ----------------------------------------------------------------")
             
-            if(self.iteration_count % 3 == 1):
-                generate_tasks(self.vehicles, self.iteration_count)
+            # if(self.iteration_count % 3 == 1):
+            generate_tasks(self.vehicles, self.iteration_count)
             vehicle_movement_funciton(self.vehicles, self.iteration_count, self.mobilty_file)
             manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
 
-            print(self.vehicles[0].agent.q_table)
             
-            time.sleep(self.time_step_length)
             print(f"Iteration: {self.iteration_count} ended ----------------------------------------------------------------")
             self.iteration_count += 1
 
