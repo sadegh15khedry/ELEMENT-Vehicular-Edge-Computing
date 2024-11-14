@@ -19,7 +19,7 @@ def handle_undecided_tasks(vehicle, edge_servers):
             task.set_execution_time(vehicle.frequency)
             task.add_execution_energy(vehicle.frequency)
             vehicle.local_execution_queue.append(task)
-            print(f"task: {task.id} locaction: local at {vehicle.id}, energy:{task.energy}, execution_time:{task.execution_time}")
+            print(f"task: {task.id} location: local at {vehicle.id}, size:{task.size}, cycles:{task.execution_cycles}, energy:{task.energy}, execution_time:{task.execution_time}")
         elif(action == 1):
             # print(f"task energy {task.energy} ")
             vehicle.unfinished_offload_tasks.append(task)
@@ -29,7 +29,7 @@ def handle_undecided_tasks(vehicle, edge_servers):
             task.add_transmission_energy(vehicle.transmission_power, closest_edge_server.bandwidth)
             # task.add_execution_energy(closest_edge_server.frequency)
             closest_edge_server.channel.append(task)
-            print(f"task: {task.id} locaction: edge_server {closest_edge_server.id}, energy:{task.energy}, execution_time:{task.execution_time}")
+            print(f"task: {task.id} location: edge_server {closest_edge_server.id}, size:{task.size}, cycles:{task.execution_cycles}, energy:{task.energy}, execution_time:{task.execution_time}")
             
 
 
