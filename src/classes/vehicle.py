@@ -1,4 +1,5 @@
 import pandas as pd
+import random
 from reinforcement_learning_agent import ReinforcementLearnigAgent
 from task import Task
 class Vehicle:
@@ -17,42 +18,43 @@ class Vehicle:
         self.undecided_tasks = []
         self.finished_tasks = []
         self.agent = ReinforcementLearnigAgent(self)
-        self.last_task_type = 0
+       
         
  
     def generate_task(self, time):
-        if self.last_task_type % 9 == 0:
+        task_type = random.randint(0,8)
+        print("Vehicle id:",self.id,"  Task type:",task_type)
+        if task_type == 0:
             size = 2000000
             cycle = 2000000
-        elif self.last_task_type % 9 == 1:
-            size = 5000000
+        elif task_type == 1:
+            size = 2000000
             cycle = 5000000
-        elif self.last_task_type % 9 == 2:
-            size = 7000000
+        elif task_type == 2:
+            size = 2000000
             cycle = 7000000
-        elif self.last_task_type % 9 == 3:
-            size = 2000000
+        elif task_type == 3:
+            size = 5000000
             cycle = 2000000
-        elif self.last_task_type % 9 == 4:
+        elif task_type == 4:
             size = 5000000
             cycle = 5000000
-        elif self.last_task_type % 9 == 5:
-            size = 7000000
+        elif task_type == 5:
+            size = 5000000
             cycle = 7000000
-        elif self.last_task_type % 9 == 6:
-            size = 2000000
+        elif task_type == 6:
+            size = 7000000
             cycle = 2000000
-        elif self.last_task_type % 9 == 7:
-            size = 5000000
+        elif task_type == 7:
+            size = 7000000
             cycle = 5000000
-        elif self.last_task_type % 9 == 8:
+        elif task_type == 8:
             size = 7000000
             cycle = 7000000
             
         task = Task(self.get_new_task_id(), self, time, cycle, size)
         self.undecided_tasks.append(task)
         # task.print_task_info()
-        self.last_task_type += 1
         # print(f"task:{task.id} is genenrated in the vehicle:{self.id}")
         
     def handle_task_finish(self, task, time):
