@@ -1,7 +1,7 @@
 import random
 import numpy as np
 
-class ReinforcementLearnigAgent():
+class ReinforcementLearningAgent():
     alpha = 0.1
     gamma = 0.9
     epsilon = 1.0
@@ -30,24 +30,24 @@ class ReinforcementLearnigAgent():
         
         
     def discretize_task_size(self, task_size):
-        if task_size == 2000000:
+        if 2000000 <= task_size and task_size <= 4000000:
             return 0
-        elif task_size == 5000000:
+        elif  5000000 <= task_size and task_size <= 7000000:
             return 1
-        elif task_size == 7000000:
+        elif  8000000 <= task_size and task_size <= 10000000:
             return 2
         else:
             raise ValueError(f"Invalid task size: {task_size}")
         
-    def discretize_execution_cycles(self, execution_time):
-        if execution_time == 2000000:
+    def discretize_execution_cycles(self, cycle):
+        if 2000000 <= cycle and cycle <= 4000000:
             return 0
-        elif execution_time == 5000000:
+        elif  5000000 <= cycle and cycle <= 7000000:
             return 1
-        elif execution_time == 7000000:
+        elif  8000000 <= cycle and cycle <= 10000000:
             return 2
         else:
-            raise ValueError(f"Invalid execution time: {execution_time}")
+            raise ValueError(f"Invalid execution time: {cycle}")
 
     def discretize_queue_length(self, queue_length):
         if 0 <= queue_length and  queue_length <= 5:
@@ -95,7 +95,7 @@ class ReinforcementLearnigAgent():
         return action
     
     def update_q_tabel(self, before_state_indices, before_task, before_action, after_state_indices):
-        reward = -0.5*(before_task.end_time- before_task.start_time)- 0.5 * before_task.energy  # negative reward for execution time
+        reward = -0.1*(before_task.response_time)- 100000000000000000 * before_task.energy  # negative reward for execution time
         current_q = self.q_table[before_state_indices][before_action]
         max_future_q = np.max(self.q_table[after_state_indices])
         new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)

@@ -4,11 +4,6 @@ def generate_tasks(vehicles, time):
         vehicle.generate_task(time)
  
 
-    
-def vehicles_task_generation(vehicles, time):
-    
-    for vehicle in vehicles:
-        vehicle.generate_task(time)
         
 def handle_undecided_tasks(vehicle, edge_servers):
     for task in vehicle.undecided_tasks:
@@ -19,17 +14,18 @@ def handle_undecided_tasks(vehicle, edge_servers):
             task.set_execution_time(vehicle.frequency)
             task.add_execution_energy(vehicle.frequency)
             vehicle.local_execution_queue.append(task)
-            print(f"task: {task.id} location: local at {vehicle.id}, size:{task.size}, cycles:{task.execution_cycles}, energy:{task.energy}, execution_time:{task.execution_time}")
+            print(f"task: {task.id}, vehicle:{task.vehicle.id}, location: local at {vehicle.id}, size:{task.size}, cycles:{task.execution_cycles}, energy:{task.energy}, execution_time:{task.execution_time}")
         elif(action == 1):
             # print(f"task energy {task.energy} ")
             vehicle.unfinished_offload_tasks.append(task)
-            closest_edge_server = vehicle.find_closest_edge_server(edge_servers)
+            closest_edge_server, distance = vehicle.find_closest_edge_server(edge_servers)
             task.execution_location = 1
             task.set_execution_time(closest_edge_server.frequency)
-            task.add_transmission_energy(vehicle.transmission_power, closest_edge_server.bandwidth)
+            task.add_transmission_energy(vehicle.transmission_power, closest_edge_server.bandwidth, distance)
+            task.set_transmission_time(closest_edge_server.bandwidth, distance)
             # task.add_execution_energy(closest_edge_server.frequency)
             closest_edge_server.channel.append(task)
-            print(f"task: {task.id} location: edge_server {closest_edge_server.id}, size:{task.size}, cycles:{task.execution_cycles}, energy:{task.energy}, execution_time:{task.execution_time}")
+            print(f"task: {task.id} vehicle:{task.vehicle.id} location: edge_server {closest_edge_server.id}, size:{task.size}, cycles:{task.execution_cycles}, energy:{task.energy}, execution_time:{task.execution_time}")
             
 
 

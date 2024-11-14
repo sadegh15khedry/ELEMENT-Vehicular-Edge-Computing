@@ -1,9 +1,14 @@
 import math
 class Task:
-    def __init__(self, id, vehicle, relese_time, execution_cycles, size):
+    v1=10**-3
+    v2=4
+    noise= 1.6*(10**-11)
+    def __init__(self, id, vehicle, release_time, execution_cycles, size):
         self.id = id
         self.vehicle = vehicle
-        self.release_time = relese_time
+        self.release_time = release_time
+        self.response_time = None
+        self.transmission_time = None
         self.size = size  # in MBs
         self.execution_time = None
         self.execution_cycles = execution_cycles
@@ -15,6 +20,7 @@ class Task:
     def is_finished(self, time):
         if self.start_time + self.execution_time == time:
             self.end_time = time
+            self.response_time = self.end_time - self.release_time
             return True
         return False
             
@@ -26,8 +32,17 @@ class Task:
         self.execution_time = math.ceil(self.execution_time)# in milicseconds
         # print(f"Execution Time: {self.execution_time} miliseconds")
         
-    def add_transmission_energy(self, trasmission_power, bandwidth):
-        self.energy += (trasmission_power * self.size) / bandwidth  # in Joules
-        
     def add_execution_energy(self, frequency):
-        self.energy += (10**-28)*(frequency ** 2)*(self.execution_cycles) # in Joules
+        self.energy += (10**-28)*(frequency ** 2)*(self.execution_cycles) # in Joules    
+    
+    
+    def add_transmission_energy(self, trasmission_power, bandwidth, distance):
+        
+        self.energy += (trasmission_power * self.size) / self.calc_transfer_rate(bandwidth,distance)  # in Joules
+        
+    
+    def set_transmission_time(self, bandwidth, distance):
+        self.transmission_time = self.size / self.calc_transfer_rate(bandwidth, distance)
+
+    def calc_transfer_rate(self,bandwidth, distance):
+        return bandwidth* math.log2(1+(Task.v1*(distance**Task.v2))/Task.noise)

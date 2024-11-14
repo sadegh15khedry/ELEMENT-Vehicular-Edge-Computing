@@ -3,7 +3,7 @@ import os
 import time
 import numpy as np
 
-from vehicle_movement import vehicle_movement_funciton
+from vehicle_movement import vehicle_movement_function
 from task_management import manage_tasks, generate_tasks
 from initialization import load_config, initialize_edge_servers, initialize_vehicles, load_mobility_csv
 
@@ -43,7 +43,7 @@ class Simulation:
             
             # if(self.iteration_count % 3 == 1):
             generate_tasks(self.vehicles, self.iteration_count)
-            vehicle_movement_funciton(self.vehicles, self.iteration_count, self.mobilty_file)
+            vehicle_movement_function(self.vehicles, self.iteration_count, self.mobilty_file)
             manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
 
             

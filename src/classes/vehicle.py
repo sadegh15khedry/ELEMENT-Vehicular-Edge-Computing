@@ -1,6 +1,6 @@
 import pandas as pd
 import random
-from reinforcement_learning_agent import ReinforcementLearnigAgent
+from reinforcement_learning_agent import ReinforcementLearningAgent
 from task import Task
 class Vehicle:
     def __init__(self, id, x, y, speed, direction, frequency):
@@ -12,45 +12,23 @@ class Vehicle:
         self.speed = speed
         self.direction = direction
         self.transmission_power = 100*(10**-3)
-        self.runnig_task = None
+        self.running_task = None
         self.local_execution_queue = []
         self.unfinished_offload_tasks = []
         self.undecided_tasks = []
         self.finished_tasks = []
-        self.agent = ReinforcementLearnigAgent(self)
+        self.agent = ReinforcementLearningAgent(self)
        
         
  
     def generate_task(self, time):
-        task_type = random.randint(0,8)
-        print("Vehicle id:",self.id,"  Task type:",task_type)
-        if task_type == 0:
-            size = 2000000
-            cycle = 2000000
-        elif task_type == 1:
-            size = 2000000
-            cycle = 5000000
-        elif task_type == 2:
-            size = 2000000
-            cycle = 7000000
-        elif task_type == 3:
-            size = 5000000
-            cycle = 2000000
-        elif task_type == 4:
-            size = 5000000
-            cycle = 5000000
-        elif task_type == 5:
-            size = 5000000
-            cycle = 7000000
-        elif task_type == 6:
-            size = 7000000
-            cycle = 2000000
-        elif task_type == 7:
-            size = 7000000
-            cycle = 5000000
-        elif task_type == 8:
-            size = 7000000
-            cycle = 7000000
+        size = random.randint(2,10)
+        cycle = random.randint(2,10)
+        print("Vehicle id:",self.id,"  Task size:",size,"  Task cycle", cycle)
+        
+        size *= 10**6
+        cycle *= 10**6
+        
             
         task = Task(self.get_new_task_id(), self, time, cycle, size)
         self.undecided_tasks.append(task)
@@ -63,7 +41,7 @@ class Vehicle:
         self.agent.check_if_need_to_update_q_table()
         
         if task.execution_location == 0:
-            self.runnig_task = None
+            self.running_task = None
         elif task.execution_location == 1:
             self.unfinished_offload_tasks.remove(task)
             
@@ -73,7 +51,7 @@ class Vehicle:
         return self.new_task_id
     
     def is_busy(self, time):
-        task = self.runnig_task
+        task = self.running_task
         if task == None:
             return False
         
@@ -86,10 +64,10 @@ class Vehicle:
         return True
          
     def run_new_task(self, time):
-        if self.local_execution_queue and self.runnig_task is None:
+        if self.local_execution_queue and self.running_task is None:
             task = self.local_execution_queue.pop(0)
             task.start_time = time
-            self.runnig_task = task
+            self.running_task = task
             # print(f"task:{task.id} is now processing on vehicle:{self.id}")
             
     
@@ -170,7 +148,7 @@ class Vehicle:
                 min_distance = distance
                 closest_server = server
 
-        return closest_server
+        return closest_server , min_distance
 
 
         

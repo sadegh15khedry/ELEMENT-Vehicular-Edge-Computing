@@ -14,7 +14,7 @@ def get_time_step_movements(time_step, mobility_file_path):
     time_step_csv = mobility_file_path[mobility_file_path['time'] == time_step]
     return time_step_csv
     
-def vehicle_movement_funciton(vehicles, time_step, mobility_file):
+def vehicle_movement_function(vehicles, time_step, mobility_file):
     time_step_movements = get_time_step_movements(time_step, mobility_file)
     for vehicle in vehicles:
         move_vehicle(vehicle, time_step_movements)
