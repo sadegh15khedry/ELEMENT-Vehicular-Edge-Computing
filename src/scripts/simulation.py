@@ -46,13 +46,16 @@ class Simulation:
             vehicle_movement_funciton(self.vehicles, self.iteration_count, self.mobilty_file)
             manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
 
+            print(self.vehicles[0].agent.q_table)
             
             time.sleep(self.time_step_length)
             print(f"Iteration: {self.iteration_count} ended ----------------------------------------------------------------")
             self.iteration_count += 1
 
+
+
         # self.finish_time = time.time()
         print(f"Simulation finished! Total iterations: {self.iteration_count}.")
-        if(self.mode == 'train'):
-            self.save_q_table(self.vehicles[0].agent.q_table)
-            self.load_q_table()
+        # if(self.mode == 'train'):
+        #     self.save_q_table(self.vehicles[0].agent.q_table)
+        #     self.load_q_table()

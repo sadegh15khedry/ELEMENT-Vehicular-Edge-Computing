@@ -21,7 +21,7 @@ class ReinforcementLearnigAgent():
         
         self.nember_of_task_sizes = 3
         self.number_of_execution_cycles = 3
-        self.max_queue_length = 10
+        self.max_queue_length = 3
         self.vehicle = vehicle
 
         self.actions = [0, 1] # 0 for local execution and  for offloading and 
@@ -49,8 +49,12 @@ class ReinforcementLearnigAgent():
             raise ValueError(f"Invalid execution time: {execution_time}")
 
     def discretize_queue_length(self, queue_length):
-        if 0 <= queue_length and  queue_length <= self.max_queue_length:
-            return int(queue_length)
+        if 0 <= queue_length and  queue_length <= 5:
+            return 0
+        elif 5 < queue_length and queue_length<=20:
+            return 1
+        elif 20 < queue_length:
+            return 2
         else:
             raise ValueError(f"Invalid queue length: {queue_length}")
 
