@@ -12,7 +12,7 @@ class ReinforcementLearningAgent():
     max_queue_length = 3
     number_of_distance_ranges=3
     actions = [0, 1] # 0 for local execution and  for offloading and 
-    q_table = np.zeros((number_of_task_sizes, number_of_execution_cycles, max_queue_length, len(actions)))
+    q_table = np.zeros((number_of_task_sizes, number_of_execution_cycles, max_queue_length,number_of_distance_ranges, len(actions)))
     def __init__(self, vehicle):
         # RL hyperparameters
 
@@ -60,32 +60,34 @@ class ReinforcementLearningAgent():
         else:
             raise ValueError(f"Invalid queue length: {queue_length}")
 
-    # def discretize_distance(self, distance):
-    #     if 0 <= distance and  distance <= 5:
-    #         return 0
-    #     elif 5 < distance and distance<=20:
-    #         return 1
-    #     elif 20 < distance:
-    #         return 2
-    #     else:
-    #         raise ValueError(f"Invalid queue length: {queue_length}")
+    def discretize_distance(self, distance):
+        if 0 <= distance and  distance <= 100:
+            return 0
+        elif 100 < distance and distance<=200:
+            return 1
+        elif 200 < distance:
+            return 2
+        else:
+            raise ValueError(f"Invalid queue length: {distance}")
 
     
     def discretize_state(self, state_values):
         task_size_state = self.discretize_task_size(state_values['task_size'])
         execution_time_state = self.discretize_execution_time(state_values['execution_time'])
         queue_length_state = self.discretize_queue_length(state_values['queue_length'])
-        return (task_size_state, execution_time_state, queue_length_state)
+        distance_state=self.discretize_distance(state_values['distance'])
+        return (task_size_state, execution_time_state, queue_length_state,distance_state)
 
     def store_previous_task(self, task):
         self.previous_task = task
         
-    def choose_action(self, task, queue_length):#state_indices
+    def choose_action(self, task, queue_length,distance):#state_indices
         
         self.counter += 1
         state_indices = (self.discretize_task_size(task.size),
                          self.discretize_execution_cycles(task.execution_cycles),
-                         self.discretize_queue_length(queue_length))
+                         self.discretize_queue_length(queue_length),
+                         self.discretize_distance(distance))
         
         
         # check_if_need_to_update_q_table()
@@ -107,7 +109,7 @@ class ReinforcementLearningAgent():
         return action
     
     def update_q_tabel(self, before_state_indices, before_task, before_action, after_state_indices):
-        print("To calculate reward----> Vehicle->",before_task.vehicle.id,"  Task:",before_task.id, "Response time:",before_task.response_time, "   Energy:",before_task.energy)
+        print("To calculate reward----> Vehicle->",before_task.vehicle.id,"  Task:",before_task.id, "Response time:",before_task.response_time, "   Energy:",before_task.energy, " , Before state indices:",before_state_indices)
         reward = -0.5*(before_task.response_time)- 0.5 * before_task.energy  # negative reward for execution time
         current_q = self.q_table[before_state_indices][before_action]
         max_future_q = np.max(self.q_table[after_state_indices])

@@ -10,6 +10,7 @@ class ReinforcementLearningAgent():
     number_of_task_sizes = 3
     number_of_execution_cycles = 3
     max_queue_length = 3
+    number_of_distance_ranges=3
     actions = [0, 1] # 0 for local execution and  for offloading and 
     q_table = np.zeros((number_of_task_sizes, number_of_execution_cycles, max_queue_length, len(actions)))
     def __init__(self, vehicle):
@@ -40,11 +41,11 @@ class ReinforcementLearningAgent():
             raise ValueError(f"Invalid task size: {task_size}")
         
     def discretize_execution_cycles(self, cycle):
-        if 2000000 <= cycle and cycle <= 4000000:
+        if 2*(10**9) <= cycle and cycle <= 4*(10**9):
             return 0
-        elif  5000000 <= cycle and cycle <= 7000000:
+        elif  5*(10**9) <= cycle and cycle <= 7*(10**9):
             return 1
-        elif  8000000 <= cycle and cycle <= 10000000:
+        elif  8*(10**9) <= cycle and cycle <= 10*(10**9):
             return 2
         else:
             raise ValueError(f"Invalid execution time: {cycle}")
@@ -59,6 +60,17 @@ class ReinforcementLearningAgent():
         else:
             raise ValueError(f"Invalid queue length: {queue_length}")
 
+    # def discretize_distance(self, distance):
+    #     if 0 <= distance and  distance <= 5:
+    #         return 0
+    #     elif 5 < distance and distance<=20:
+    #         return 1
+    #     elif 20 < distance:
+    #         return 2
+    #     else:
+    #         raise ValueError(f"Invalid queue length: {queue_length}")
+
+    
     def discretize_state(self, state_values):
         task_size_state = self.discretize_task_size(state_values['task_size'])
         execution_time_state = self.discretize_execution_time(state_values['execution_time'])
