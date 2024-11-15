@@ -33,16 +33,25 @@ class Task:
         # print(f"Execution Time: {self.execution_time} miliseconds")
         
     def add_execution_energy(self, frequency):
-        self.energy += (10**-28)*(frequency ** 2)*(self.execution_cycles) # in Joules    
+        execution_energy= (10**-28)*(frequency ** 2)*(self.execution_cycles)
+        print(f"id:{self.id} E_ex:{execution_energy}")
+        self.energy += execution_energy # in Joules    
     
     
     def add_transmission_energy(self, trasmission_power, bandwidth, distance):
-        
-        self.energy += (trasmission_power * self.size) / self.calc_transfer_rate(bandwidth,distance)  # in Joules
+        transmission_energy= (trasmission_power * self.size) / self.calc_transfer_rate(bandwidth,distance)
+        print(f"id:{self.id} E_tr:{transmission_energy}")
+        self.energy += transmission_energy  # in Joules
         
     
     def set_transmission_time(self, bandwidth, distance):
-        self.transmission_time = self.size / self.calc_transfer_rate(bandwidth, distance)
+        transmission_time=self.size / self.calc_transfer_rate(bandwidth, distance)
+        transmission_time *= 1000
+        transmission_time =  round(transmission_time)
+        print(f"id:{self.id} T_tr:{transmission_time}")
+        self.transmission_time = transmission_time 
 
     def calc_transfer_rate(self,bandwidth, distance):
-        return bandwidth* math.log2(1+(Task.v1*(distance**Task.v2))/Task.noise)
+        rate=bandwidth* math.log2(1+(Task.v1*(distance**Task.v2))/Task.noise)
+        print(f"id:{self.id} Transfer rate:{rate}")
+        return rate 

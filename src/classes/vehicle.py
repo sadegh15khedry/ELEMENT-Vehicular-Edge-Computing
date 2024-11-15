@@ -24,7 +24,7 @@ class Vehicle:
     def generate_task(self, time):
         size = random.randint(2,10)
         cycle = random.randint(2,10)
-        print("Vehicle id:",self.id,"  Task size:",size,"  Task cycle", cycle)
+        # print("Vehicle id:",self.id,"  Task size:",size,"  Task cycle", cycle)
         
         size *= 10**6
         cycle *= 10**6
@@ -36,6 +36,7 @@ class Vehicle:
         # print(f"task:{task.id} is genenrated in the vehicle:{self.id}")
         
     def handle_task_finish(self, task, time):
+        print(f"-------------------------finish---------------task:{task.id}, energy:{task.energy}, response time: {task.response_time} location: {task.execution_location}")
         task.end_time = time
         self.finished_tasks.append(task)
         self.agent.check_if_need_to_update_q_table()
