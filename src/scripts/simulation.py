@@ -2,13 +2,14 @@ import sys
 import os
 import time
 import numpy as np
-
+from report import save_report
+from reinforcement_learning_agent import ReinforcementLearningAgent
 from vehicle_movement import vehicle_movement_function
 from task_management import manage_tasks, generate_tasks
 from initialization import load_config, initialize_edge_servers, initialize_vehicles, load_mobility_csv
 
 class Simulation:
-    def __init__(self, algorithm, time_step_length, max_iterations, mobility_file_path, mode, edge_file_path, vehicle_file_path):
+    def __init__(self, algorithm, time_step_length, max_iterations, mobility_file_path, mode, edge_file_path, vehicle_file_path, report_path):
         self.mode = mode
         self.edge_servers = initialize_edge_servers(edge_file_path)
         self.vehicles = initialize_vehicles(vehicle_file_path)
@@ -18,6 +19,7 @@ class Simulation:
         self.iteration_count = 1
         self.time_step_length = time_step_length
         self.max_iterations = max_iterations
+        self.report_path = report_path
         self.mobilty_file = load_mobility_csv(mobility_file_path)
         
     
@@ -27,12 +29,16 @@ class Simulation:
         
     def load_q_table(self):
         q_table = np.load('../results/q_table/q_table.npy')
-        print(q_table)
-        return
-        
+        print(ReinforcementLearningAgent.q_table)
+        print("-------------------")
+        # print(q_table)
+        ReinforcementLearningAgent.q_table = q_table
+        print(ReinforcementLearningAgent.q_table)
         
     # def initialize_vehicles(self):
     def run(self):
+        if self.mode == 'test':
+            self.load_q_table()
         print("Running simulation stated!")
         self.start_time = time.time()
         
@@ -54,6 +60,7 @@ class Simulation:
 
         # self.finish_time = time.time()
         print(f"Simulation finished! Total iterations: {self.iteration_count}.")
-        # if(self.mode == 'train'):
-        #     self.save_q_table(self.vehicles[0].agent.q_table)
+        save_report(self.vehicles, self.report_path)
+        if(self.mode == 'train'):
+            self.save_q_table(self.vehicles[0].agent.q_table)
         #     self.load_q_table()

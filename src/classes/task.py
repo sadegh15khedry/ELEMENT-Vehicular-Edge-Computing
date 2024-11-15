@@ -8,14 +8,17 @@ class Task:
         self.vehicle = vehicle
         self.release_time = release_time
         self.response_time = None
-        self.transmission_time = None
+        self.transmission_time = 0
         self.size = size  # in MBs
         self.execution_time = None
         self.execution_cycles = execution_cycles
         self.start_time = None
         self.end_time = None
         self.energy = 0
+        self.execution_energy=0
+        self.transfer_energy=0
         self.execution_location = None
+        self.transfer_rate=0
 
     def is_finished(self, time):
         if self.start_time + self.execution_time == time:
@@ -34,12 +37,14 @@ class Task:
         
     def add_execution_energy(self, frequency):
         execution_energy= (10**-28)*(frequency ** 2)*(self.execution_cycles)
+        self.execution_energy=execution_energy
         # print(f"id:{self.id} E_ex:{execution_energy}")
         self.energy += execution_energy # in Joules    
     
     
     def add_transmission_energy(self, trasmission_power, bandwidth, distance):
         transmission_energy= (trasmission_power * self.size) / self.calc_transfer_rate(bandwidth,distance,trasmission_power)
+        self.transfer_energy=transmission_energy
         # print(f"id:{self.id} E_tr:{transmission_energy}")
         self.energy += transmission_energy  # in Joules
         
@@ -56,5 +61,6 @@ class Task:
         # print(f"distance:{distance}, v1:{Task.v1}, v2:{Task.v2}, power{trasmission_power}, Noise{Task.noise}, bandwidth{bandwidth}")
         
         rate=bandwidth* math.log2(1+(Task.v1*(distance**(-Task.v2))*trasmission_power)/Task.noise)
+        self.transfer_rate=rate
         # print(f"id:{self.id} Transfer rate:{rate}")
         return rate 
