@@ -11,7 +11,7 @@ class Vehicle:
         self.new_task_id = 0
         self.speed = speed
         self.direction = direction
-        self.transmission_power = 100*(10**-3)
+        self.transmission_power = 300*(10**-3)
         self.running_task = None
         self.local_execution_queue = []
         self.unfinished_offload_tasks = []
@@ -27,7 +27,7 @@ class Vehicle:
         # print("Vehicle id:",self.id,"  Task size:",size,"  Task cycle", cycle)
         
         size *= 10**6
-        cycle *= 10**6
+        cycle *= 10**9
         
             
         task = Task(self.get_new_task_id(), self, time, cycle, size)

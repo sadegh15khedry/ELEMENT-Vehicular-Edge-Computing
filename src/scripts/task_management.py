@@ -24,7 +24,7 @@ def handle_undecided_tasks(vehicle, edge_servers):
             print(f"task: {task.id} location: edge_server {closest_edge_server.id}, Distance:{distance}, size:{task.size}, cycles:{task.execution_cycles}")
             task.set_execution_time(closest_edge_server.frequency)
             task.add_transmission_energy(vehicle.transmission_power, closest_edge_server.bandwidth, distance)
-            task.set_transmission_time(closest_edge_server.bandwidth, distance)
+            task.set_transmission_time(closest_edge_server.bandwidth, distance,vehicle.transmission_power)
             # task.add_execution_energy(closest_edge_server.frequency)
             closest_edge_server.channel.append(task)
         print(f"E_total:{task.energy}, T_ex:{task.execution_time}")
@@ -42,7 +42,6 @@ def manage_tasks(vehicles, edge_servers, time):
             vehicle.run_new_task(time)
     
     for edge_server in edge_servers:
-        # print("we are hereeeeeeeeeee")
         edge_server.check_channel(time)
         is_busy = edge_server.is_busy(time)
         if is_busy == False:
