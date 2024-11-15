@@ -11,6 +11,7 @@ class ReinforcementLearningAgent():
     number_of_execution_cycles = 3
     max_queue_length = 3
     number_of_distance_ranges=3
+    should_update_q_table = None
     actions = [0, 1] # 0 for local execution and  for offloading and 
     q_table = np.zeros((number_of_task_sizes, number_of_execution_cycles, max_queue_length,number_of_distance_ranges, len(actions)))
     def __init__(self, vehicle):
@@ -103,12 +104,13 @@ class ReinforcementLearningAgent():
         # self.actions_list.append(action) #for update_q_table later
         # self.state_indices_list.append(state_indices)
         # self.not_update_q_table_tasks_list.append(task)
-        history_row = { "id": self.counter,"task": task, "state_indices": state_indices, "action": action, "reward": None, "is_updated": False }
-        self.history.append (history_row)
-        self.check_if_need_to_update_q_table()
+        if ReinforcementLearningAgent.should_update_q_table == True:
+            history_row = { "id": self.counter,"task": task, "state_indices": state_indices, "action": action, "reward": None, "is_updated": False }
+            self.history.append (history_row)
+            self.check_if_need_to_update_q_table()
         return action
     
-    def update_q_tabel(self, before_state_indices, before_task, before_action, after_state_indices):
+    def update_q_table(self, before_state_indices, before_task, before_action, after_state_indices):
         print("To calculate reward----> Vehicle->",before_task.vehicle.id,"  Task:",before_task.id, "Response time:",before_task.response_time, "   Energy:",before_task.energy, " , Before state indices:",before_state_indices)
         reward = -0.5*(before_task.response_time)- 0.5 * before_task.energy  # negative reward for execution time
         current_q = self.q_table[before_state_indices][before_action]
@@ -130,5 +132,5 @@ class ReinforcementLearningAgent():
             if row["is_updated"] == False and row["task"].end_time != None and index+1 != size:
                 before_state_indices = row["state_indices"]
                 after_state_indices = self.history[index+1]["state_indices"]
-                self.update_q_tabel(before_state_indices, row["task"], row["action"], after_state_indices)
+                self.update_q_table(before_state_indices, row["task"], row["action"], after_state_indices)
                 row["is_updated"] = True

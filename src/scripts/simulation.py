@@ -20,7 +20,7 @@ class Simulation:
         self.time_step_length = time_step_length
         self.max_iterations = max_iterations
         self.report_path = report_path
-        self.mobilty_file = load_mobility_csv(mobility_file_path)
+        self.mobility_file = load_mobility_csv(mobility_file_path)
         
     
     def save_q_table(self, q_table):
@@ -37,11 +37,16 @@ class Simulation:
         
     # def initialize_vehicles(self):
     def run(self):
-        if self.mode == 'test':
+        if self.mode == 'test' or self.mode == "test_with_q_table_update":
             self.load_q_table()
         print("Running simulation stated!")
         self.start_time = time.time()
+        should_update_q_table = True
         
+        if(self.mode == 'test'):
+            should_update_q_table = False
+        
+        ReinforcementLearningAgent.should_update_q_table = should_update_q_table
         
         while self.iteration_count <= self.max_iterations:
             # iteration_start_time = time.time()
@@ -49,7 +54,7 @@ class Simulation:
             
             # if(self.iteration_count % 3 == 1):
             generate_tasks(self.vehicles, self.iteration_count)
-            vehicle_movement_function(self.vehicles, self.iteration_count, self.mobilty_file)
+            vehicle_movement_function(self.vehicles, self.iteration_count, self.mobility_file)
             manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
 
             
