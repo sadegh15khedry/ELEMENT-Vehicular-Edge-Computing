@@ -40,6 +40,7 @@ def handle_undecided_tasks(vehicle, edge_servers, algorithm):
             task.set_execution_time(closest_edge_server.frequency)
             task.add_transmission_energy(vehicle.transmission_power, closest_edge_server.bandwidth, distance)
             task.set_transmission_time(closest_edge_server.bandwidth, distance,vehicle.transmission_power)
+            task.distance = distance
             closest_edge_server.channel.append(task)
             
 
