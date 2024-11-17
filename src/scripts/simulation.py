@@ -55,7 +55,7 @@ class Simulation:
             # if(self.iteration_count % 3 == 1):
             generate_tasks(self.vehicles, self.iteration_count)
             vehicle_movement_function(self.vehicles, self.iteration_count, self.mobility_file)
-            manage_tasks(self.vehicles, self.edge_servers, self.iteration_count)
+            manage_tasks(self.vehicles, self.edge_servers, self.iteration_count, self.algorithm)
 
             
             print(f"Iteration: {self.iteration_count} ended ----------------------------------------------------------------")

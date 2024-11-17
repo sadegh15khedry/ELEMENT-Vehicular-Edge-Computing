@@ -1,14 +1,26 @@
- 
+import random
+
 def generate_tasks(vehicles, time):
     for vehicle in vehicles:
         vehicle.generate_task(time)
  
+def get_action(vehicle, task, distance, algorithm):
+    if(algorithm == 'proposed'):
+        action = vehicle.agent.choose_action(task, len(vehicle.local_execution_queue),distance)
+    elif (algorithm == 'local_only'):
+        action = 0
+    elif (algorithm == 'offload_only'):
+        action = 1
+    elif (algorithm == 'random'):
+        action = random.uniform(0, 1)
+    return action
 
         
-def handle_undecided_tasks(vehicle, edge_servers):
+def handle_undecided_tasks(vehicle, edge_servers, algorithm):
     for task in vehicle.undecided_tasks:
         closest_edge_server, distance = vehicle.find_closest_edge_server(edge_servers)
-        action = vehicle.agent.choose_action(task, len(vehicle.local_execution_queue),distance)
+        action = get_action(vehicle, edge_servers, algorithm)
+        
         vehicle.undecided_tasks.remove(task)
         # print(f"------------------Vehicle:{task.vehicle.id}---------------------------")
         if(action == 0):
