@@ -39,7 +39,7 @@ class Simulation:
     def run(self):
         if self.mode == 'test' or self.mode == "test_with_q_table_update":
             self.load_q_table()
-        print("Running simulation stated!")
+        # print("Running simulation stated!")
         self.start_time = time.time()
         should_update_q_table = True
         
@@ -52,13 +52,13 @@ class Simulation:
             # iteration_start_time = time.time()
             print(f"Iteration: {self.iteration_count} started  ----------------------------------------------------------------")
             
-            # if(self.iteration_count % 3 == 1):
-            generate_tasks(self.vehicles, self.iteration_count)
+            if(self.iteration_count % 100 == 1):
+                generate_tasks(self.vehicles, self.iteration_count)
             vehicle_movement_function(self.vehicles, self.iteration_count, self.mobility_file)
             manage_tasks(self.vehicles, self.edge_servers, self.iteration_count, self.algorithm)
 
             
-            print(f"Iteration: {self.iteration_count} ended ----------------------------------------------------------------")
+            # print(f"Iteration: {self.iteration_count} ended ----------------------------------------------------------------")
             self.iteration_count += 1
 
 

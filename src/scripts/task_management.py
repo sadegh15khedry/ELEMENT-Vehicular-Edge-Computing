@@ -14,7 +14,7 @@ def get_action(vehicle, task, distance, algorithm):
         action = 1
     elif (algorithm == 'random'):
         action = random.randrange(0, 2)
-    print(action)
+    # print(action)
     return action
 
         
@@ -27,7 +27,7 @@ def handle_undecided_tasks(vehicle, edge_servers, algorithm):
         # print(f"------------------Vehicle:{task.vehicle.id}---------------------------")
         if(action == 0):
             task.execution_location = 0
-            print(f"task: {task.id}, location: local at {vehicle.id}, size:{task.size}, cycles:{task.execution_cycles}")
+            # print(f"task: {task.id}, location: local at {vehicle.id}, size:{task.size}, cycles:{task.execution_cycles}")
             task.set_execution_time(vehicle.frequency)
             task.add_execution_energy(vehicle.frequency)
             vehicle.local_execution_queue.append(task)
@@ -36,7 +36,7 @@ def handle_undecided_tasks(vehicle, edge_servers, algorithm):
             vehicle.unfinished_offload_tasks.append(task)
 
             task.execution_location = 1
-            print(f"task: {task.id} location: edge_server {closest_edge_server.id}, Distance:{distance}, size:{task.size}, cycles:{task.execution_cycles}")
+            # print(f"task: {task.id} location: edge_server {closest_edge_server.id}, Distance:{distance}, size:{task.size}, cycles:{task.execution_cycles}")
             task.set_execution_time(closest_edge_server.frequency)
             task.add_transmission_energy(vehicle.transmission_power, closest_edge_server.bandwidth, distance)
             task.set_transmission_time(closest_edge_server.bandwidth, distance,vehicle.transmission_power)

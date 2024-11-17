@@ -1,4 +1,4 @@
-name: farsi
+name: element
 channels:
   - defaults
   - https://repo.anaconda.com/pkgs/main
