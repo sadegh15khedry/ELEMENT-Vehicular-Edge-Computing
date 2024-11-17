@@ -67,4 +67,5 @@ class Simulation:
         print(f"Simulation finished! Total iterations: {self.iteration_count}.")
         save_report(self.vehicles, self.report_path)
         if(self.mode == 'train'):
+            print(self.vehicles[0].agent.q_table)
             self.save_q_table(self.vehicles[0].agent.q_table)
