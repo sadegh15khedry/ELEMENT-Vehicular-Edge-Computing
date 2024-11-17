@@ -5,6 +5,7 @@ def generate_tasks(vehicles, time):
         vehicle.generate_task(time)
  
 def get_action(vehicle, task, distance, algorithm):
+    action = None
     if(algorithm == 'proposed'):
         action = vehicle.agent.choose_action(task, len(vehicle.local_execution_queue),distance)
     elif (algorithm == 'local_only'):
@@ -13,7 +14,7 @@ def get_action(vehicle, task, distance, algorithm):
         action = 1
     elif (algorithm == 'random'):
         action = random.randrange(0, 2)
-        print(action)
+    print(action)
     return action
 
         

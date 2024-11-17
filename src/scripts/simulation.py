@@ -68,4 +68,3 @@ class Simulation:
         save_report(self.vehicles, self.report_path)
         if(self.mode == 'train'):
             self.save_q_table(self.vehicles[0].agent.q_table)
-        #     self.load_q_table()
