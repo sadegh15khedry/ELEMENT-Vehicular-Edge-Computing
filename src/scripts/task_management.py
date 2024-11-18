@@ -30,6 +30,7 @@ def handle_undecided_tasks(vehicle, edge_servers, algorithm):
             # print(f"task: {task.id}, location: local at {vehicle.id}, size:{task.size}, cycles:{task.execution_cycles}")
             task.set_execution_time(vehicle.frequency)
             task.add_execution_energy(vehicle.frequency)
+            task.distance = distance   
             vehicle.local_execution_queue.append(task)
         elif(action == 1):
 

@@ -54,7 +54,7 @@ class Simulation:
         
         while self.iteration_count <= self.max_iterations:
             # iteration_start_time = time.time()
-            print(f"Iteration: {self.iteration_count} started  ----------------------------------------------------------------")
+            print(f"Iteration: {self.iteration_count}")
             
             if(self.iteration_count % 100 == 1):
                 generate_tasks(self.vehicles, self.iteration_count)
