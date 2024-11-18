@@ -15,7 +15,7 @@ class Task:
         self.start_time = None
         self.end_time = None
         self.energy = 0
-        self.task_distance = None
+        self.distance = None
         self.execution_energy=0
         self.transfer_energy=0
         self.execution_location = None

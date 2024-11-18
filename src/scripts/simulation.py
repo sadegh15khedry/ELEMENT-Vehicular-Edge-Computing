@@ -2,6 +2,7 @@ import sys
 import os
 import time
 import numpy as np
+import pandas as pd
 from report import save_report
 from reinforcement_learning_agent import ReinforcementLearningAgent
 from vehicle_movement import vehicle_movement_function
@@ -9,13 +10,14 @@ from task_management import manage_tasks, generate_tasks
 from initialization import load_config, initialize_edge_servers, initialize_vehicles, load_mobility_csv
 
 class Simulation:
-    def __init__(self, algorithm, time_step_length, max_iterations, mobility_file_path, mode, edge_file_path, vehicle_file_path, report_path):
+    def __init__(self, algorithm, time_step_length, max_iterations, mobility_file_path, mode, edge_file_path, vehicle_file_path, report_path, q_table_path):
         self.mode = mode
         self.edge_servers = initialize_edge_servers(edge_file_path)
         self.vehicles = initialize_vehicles(vehicle_file_path)
         self.start_time = 0
         self.finish_time = 0
         self.algorithm = algorithm
+        self.q_table_path = q_table_path
         self.iteration_count = 1
         self.time_step_length = time_step_length
         self.max_iterations = max_iterations
@@ -24,8 +26,10 @@ class Simulation:
         
     
     def save_q_table(self, q_table):
-        np.save('../results/q_table/q_table.npy', q_table)
+        np.save(self.q_table_path+'.npy', q_table)
+        # np.savetxt(self.q_table_path+'.txt', q_table, fmt="%d")
         # print (type(q_table))
+        
         
     def load_q_table(self):
         q_table = np.load('../results/q_table/q_table.npy')
