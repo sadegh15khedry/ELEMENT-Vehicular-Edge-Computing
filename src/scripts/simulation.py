@@ -32,7 +32,7 @@ class Simulation:
         
         
     def load_q_table(self):
-        q_table = np.load('../results/q_table/q_table.npy')
+        q_table = np.load(self.q_table_path+'.npy')
         print(ReinforcementLearningAgent.q_table)
         print("-------------------")
         # print(q_table)
