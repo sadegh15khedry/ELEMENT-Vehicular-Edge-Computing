@@ -42,6 +42,7 @@ class Simulation:
     # def initialize_vehicles(self):
     def run(self):
         if self.mode == 'test' or self.mode == "test_with_q_table_update":
+            ReinforcementLearningAgent.epsiolin = 0
             self.load_q_table()
         # print("Running simulation stated!")
         self.start_time = time.time()
