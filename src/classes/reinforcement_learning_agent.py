@@ -4,7 +4,7 @@ import numpy as np
 class ReinforcementLearningAgent():
     alpha = 0.1
     gamma = 0.9
-    epsilon =  0.1 # Hadi test
+    epsilon =  0.5 # Hadi test
     epsilon_min = 0.01
     epsilon_decay = 0.995
     number_of_task_sizes = 3
@@ -95,12 +95,15 @@ class ReinforcementLearningAgent():
         # if len(self.state_indices_list) > 1:
         #     self.update_q_tabel()
         # self.prvious_state_indices = state_indices
-            
-        if np.random.rand() < self.epsilon:
-            action = np.random.choice(self.actions)
+        print("want to choose an action:")
+        print("epsilon is: " , ReinforcementLearningAgent.epsilon)   
+        if np.random.rand() < ReinforcementLearningAgent.epsilon:
+            print("I chose it randomly!")
+            action = np.random.choice(ReinforcementLearningAgent.actions)
         else:
-            action = np.argmax(self.q_table[state_indices])
-        
+            print("I choose it based on this qtable  ",ReinforcementLearningAgent.q_table)
+            action = np.argmax(ReinforcementLearningAgent.q_table[state_indices])
+        print("the action:",action)
         # self.actions_list.append(action) #for update_q_table later
         # self.state_indices_list.append(state_indices)
         # self.not_update_q_table_tasks_list.append(task)
@@ -113,13 +116,13 @@ class ReinforcementLearningAgent():
     def update_q_table(self, before_state_indices, before_task, before_action, after_state_indices):
         # print("To calculate reward----> Vehicle->",before_task.vehicle.id,"  Task:",before_task.id, "Response time:",before_task.response_time, "   Energy:",before_task.energy, " , Before state indices:",before_state_indices)
         reward = -0.5*(before_task.response_time)- 0.5 * before_task.energy  # negative reward for execution time
-        current_q = self.q_table[before_state_indices][before_action]
-        max_future_q = np.max(self.q_table[after_state_indices])
-        new_q = current_q + self.alpha * (reward + self.gamma * max_future_q - current_q)
-        self.q_table[before_state_indices][before_action] = new_q
+        current_q = ReinforcementLearningAgent.q_table[before_state_indices][before_action]
+        max_future_q = np.max(ReinforcementLearningAgent.q_table[after_state_indices])
+        new_q = current_q + ReinforcementLearningAgent.alpha * (reward + ReinforcementLearningAgent.gamma * max_future_q - current_q)
+        ReinforcementLearningAgent.q_table[before_state_indices][before_action] = new_q
         #self.updated_state_indices_list.append(before_state_indices)
         # print("Q-table updated!!!!!!!!")
-        # print(self.q_table)
+        # print(ReinforcementLearningAgent.q_table)
 
         
     
