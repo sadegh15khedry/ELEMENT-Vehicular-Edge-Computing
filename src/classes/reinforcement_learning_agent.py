@@ -5,8 +5,9 @@ class ReinforcementLearningAgent():
     alpha = 0.1
     gamma = 0.9
     epsilon =  0.5 # Hadi test
-    epsilon_min = 0.01
-    epsilon_decay = 0.995
+    epsilon_min = 0.05
+    epsilon_decay = 0.1/100000
+
     number_of_task_sizes = 3
     number_of_execution_cycles = 3
     max_queue_length = 3
@@ -103,6 +104,7 @@ class ReinforcementLearningAgent():
         else:
             print("based on q-table")
             action = np.argmax(ReinforcementLearningAgent.q_table[state_indices])
+        ReinforcementLearningAgent.epsilon = max(ReinforcementLearningAgent.epsilon_min, ReinforcementLearningAgent.epsilon - ReinforcementLearningAgent.epsilon_decay)
         # print("the action:",action)
         # self.actions_list.append(action) #for update_q_table later
         # self.state_indices_list.append(state_indices)
