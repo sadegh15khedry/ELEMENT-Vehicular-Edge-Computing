@@ -4,7 +4,7 @@ import numpy as np
 class ReinforcementLearningAgent():
     alpha = 0.1
     gamma = 0.9
-    epsilon =  0.5 # Hadi test
+    epsilon =  0.1 # Hadi test
     epsilon_min = 0.01
     epsilon_decay = 0.995
     number_of_task_sizes = 3
