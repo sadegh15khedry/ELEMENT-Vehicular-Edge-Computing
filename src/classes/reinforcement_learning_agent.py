@@ -95,15 +95,15 @@ class ReinforcementLearningAgent():
         # if len(self.state_indices_list) > 1:
         #     self.update_q_tabel()
         # self.prvious_state_indices = state_indices
-        print("want to choose an action:")
+        # print("want to choose an action:")
         print("epsilon is: " , ReinforcementLearningAgent.epsilon)   
         if np.random.rand() < ReinforcementLearningAgent.epsilon:
-            print("I chose it randomly!")
+            print("randomly!")
             action = np.random.choice(ReinforcementLearningAgent.actions)
         else:
-            print("I choose it based on this qtable  ",ReinforcementLearningAgent.q_table)
+            print("based on q-table")
             action = np.argmax(ReinforcementLearningAgent.q_table[state_indices])
-        print("the action:",action)
+        # print("the action:",action)
         # self.actions_list.append(action) #for update_q_table later
         # self.state_indices_list.append(state_indices)
         # self.not_update_q_table_tasks_list.append(task)
