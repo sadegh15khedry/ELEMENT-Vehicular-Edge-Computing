@@ -66,8 +66,8 @@ class scraper():
             print(averaged_grouped_df)
         
         if(plot):
-            averaged_grouped_df[_response_time].plot()
-            averaged_grouped_df[_total_energy].plot()
+            
+            axes = averaged_grouped_df[[_response_time,_total_energy]].plot.line(subplots=True)
             plt.xlabel('Time')
             plt.ylabel('Values')
             plt.title('Average latency vs. Average Energy')
