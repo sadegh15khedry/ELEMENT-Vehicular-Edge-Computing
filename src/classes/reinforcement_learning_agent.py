@@ -6,7 +6,7 @@ class ReinforcementLearningAgent():
     gamma = 0.9
     epsilon =  0.5 # Hadi test
     epsilon_min = 0.05
-    epsilon_decay = 0.1/100000
+    epsilon_decay = None
 
     number_of_task_sizes = 3
     number_of_execution_cycles = 3
@@ -27,11 +27,13 @@ class ReinforcementLearningAgent():
         self.counter = 0
         self.history = []
         
-        
         self.vehicle = vehicle
 
         
-        
+    def set_epsilon_decay(number_of_iter):
+        ReinforcementLearningAgent.epsilon_decay = ReinforcementLearningAgent.epsilon/(number_of_iter/2)
+
+    
     def discretize_task_size(self, task_size):
         if 2000000 <= task_size and task_size <= 4000000:
             return 0
