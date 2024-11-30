@@ -10,10 +10,10 @@ from task_management import manage_tasks, generate_tasks
 from initialization import load_config, initialize_edge_servers, initialize_vehicles, load_mobility_csv
 
 class Simulation:
-    def __init__(self, algorithm, time_step_length, max_iterations, mobility_file_path, mode, edge_file_path, vehicle_file_path, report_path, q_table_path):
+    def __init__(self, algorithm, time_step_length, max_iterations, mobility_file_path, mode, edge_file_path, vehicle_file_path, report_path, q_table_path,agent_mode="default"):
         self.mode = mode
         self.edge_servers = initialize_edge_servers(edge_file_path)
-        self.vehicles = initialize_vehicles(vehicle_file_path)
+        self.vehicles = initialize_vehicles(vehicle_file_path,agent_mode)
         self.start_time = 0
         self.finish_time = 0
         self.algorithm = algorithm

@@ -2,6 +2,7 @@ import random
 import numpy as np
 
 class ReinforcementLearningAgent():
+
     alpha = 0.1
     gamma = 0.9
     epsilon =  1.0 # Hadi test
@@ -142,3 +143,65 @@ class ReinforcementLearningAgent():
                 after_state_indices = self.history[index+1]["state_indices"]
                 self.update_q_table(before_state_indices, row["task"], row["action"], after_state_indices)
                 row["is_updated"] = True
+
+
+class ReinforcementLearningAgentCMAB(ReinforcementLearningAgent):
+        
+    def choose_action(self, task, queue_length,distance):#state_indices
+        
+        self.counter += 1
+        state_indices = (self.discretize_task_size(task.size),
+                         self.discretize_execution_cycles(task.execution_cycles),
+                         self.discretize_queue_length(queue_length),
+                         self.discretize_distance(distance))
+        
+        
+        # check_if_need_to_update_q_table()
+        # if len(self.state_indices_list) > 1:
+        #     self.update_q_tabel()
+        # self.prvious_state_indices = state_indices
+        # print("want to choose an action:")
+        print("epsilon is: " , ReinforcementLearningAgent.epsilon)   
+        if np.random.rand() < ReinforcementLearningAgent.epsilon:
+            print("randomly!")
+            action = np.random.choice(ReinforcementLearningAgent.actions)
+        else:
+            print("based on q-table")
+            action = np.argmax(ReinforcementLearningAgent.q_table[state_indices])
+        if(ReinforcementLearningAgent.epsilon != 0):
+            ReinforcementLearningAgent.epsilon = max(ReinforcementLearningAgent.epsilon_min, ReinforcementLearningAgent.epsilon - ReinforcementLearningAgent.epsilon_decay)
+        # print("the action:",action)
+        # self.actions_list.append(action) #for update_q_table later
+        # self.state_indices_list.append(state_indices)
+        # self.not_update_q_table_tasks_list.append(task)
+        if ReinforcementLearningAgent.should_update_q_table == True:
+            history_row = { "id": self.counter,"task": task, "state_indices": state_indices, "action": action, "reward": None, "is_updated": False }
+            self.history.append (history_row)
+            # self.check_if_need_to_update_q_table() ## it is handled whenever the task is finished in the class of vehicle
+        return action
+    
+    def update_q_table(self, before_state_indices, before_task, before_action):
+        # print("To calculate reward----> Vehicle->",before_task.vehicle.id,"  Task:",before_task.id, "Response time:",before_task.response_time, "   Energy:",before_task.energy, " , Before state indices:",before_state_indices)
+        reward = -0.5*(before_task.response_time)- 0.5 * before_task.energy  # negative reward for execution time
+        current_q = ReinforcementLearningAgent.q_table[before_state_indices][before_action]
+        new_q = current_q + ReinforcementLearningAgent.alpha * (reward - current_q)
+        ReinforcementLearningAgent.q_table[before_state_indices][before_action] = new_q
+        #self.updated_state_indices_list.append(before_state_indices)
+        # print("Q-table updated!!!!!!!!")
+        # print(ReinforcementLearningAgent.q_table)
+
+        
+    
+    def check_if_need_to_update_q_table(self):
+        # print(self.history)
+        # if len(self.history) < 2:
+        #     return
+        size = len(self.history)
+        for index, row in  enumerate(self.history):
+            if row["is_updated"] == False and row["task"].end_time != None :
+                before_state_indices = row["state_indices"]
+                self.update_q_table(before_state_indices, row["task"], row["action"])
+                row["is_updated"] = True
+
+        # remove redundant history elements
+        self.history = [x for x in self.history if x["is_updated"]!=True]

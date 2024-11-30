@@ -24,12 +24,12 @@ def initialize_edge_servers(edge_server_file):
     
 
     
-def initialize_vehicles(vehicle_file_path):
+def initialize_vehicles(vehicle_file_path,agent_mode):
     config = load_config(vehicle_file_path)
     vehicles = []
     for vehicle_config in config['vehicles']:
         vehicle = Vehicle(vehicle_config['id'], vehicle_config['x'], vehicle_config['y'],
-                                vehicle_config['speed'], vehicle_config['direction'], vehicle_config['frequency'])
+                                vehicle_config['speed'], vehicle_config['direction'], vehicle_config['frequency'],agent_mode)
         print(f"vehicle id: {vehicle.id} x: {vehicle.x} y: {vehicle.y} speed: {vehicle.speed}, direction: {vehicle.direction}")
         vehicles.append(vehicle)
 
