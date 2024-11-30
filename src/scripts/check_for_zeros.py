@@ -11,9 +11,20 @@ def find_zeros(q_table_path):
 
 
 print("-------Q table 45 ---------")
-q_table_path = "/home/hadi/MS/persian conference/code/Computer-Science-Paper/results/q_table/45_q_table_proposed"
+# q_table_path = "/home/hadi/MS/persian conference/code/Computer-Science-Paper/results/q_table/45_q_table_proposed"
+q_table_path ='results/q_table/45_q_table_proposed'
+
 print(find_zeros(q_table_path))
 
 print("-------Q table 37 ---------")
-q_table_path = "/home/hadi/MS/persian conference/code/Computer-Science-Paper/results/q_table/37_q_table_proposed"
+# q_table_path = "/home/hadi/MS/persian conference/code/Computer-Science-Paper/results/q_table/37_q_table_proposed"
+q_table_path = 'results/q_table/37_q_table_proposed'
+
 print(find_zeros(q_table_path))
+
+print("-------Q table 69 ---------")
+# q_table_path = "/home/hadi/MS/persian conference/code/Computer-Science-Paper/results/q_table/69_q_table_proposed"
+q_table_path = 'results/q_table/69_q_table_proposed'
+
+print(find_zeros(q_table_path))
+
