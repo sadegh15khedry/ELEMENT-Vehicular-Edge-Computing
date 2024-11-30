@@ -106,7 +106,8 @@ class ReinforcementLearningAgent():
         else:
             print("based on q-table")
             action = np.argmax(ReinforcementLearningAgent.q_table[state_indices])
-        ReinforcementLearningAgent.epsilon = max(ReinforcementLearningAgent.epsilon_min, ReinforcementLearningAgent.epsilon - ReinforcementLearningAgent.epsilon_decay)
+        if(ReinforcementLearningAgent.epsilon != 0):
+            ReinforcementLearningAgent.epsilon = max(ReinforcementLearningAgent.epsilon_min, ReinforcementLearningAgent.epsilon - ReinforcementLearningAgent.epsilon_decay)
         # print("the action:",action)
         # self.actions_list.append(action) #for update_q_table later
         # self.state_indices_list.append(state_indices)
