@@ -1,9 +1,9 @@
 import pandas as pd
 import random
-from reinforcement_learning_agent import ReinforcementLearningAgent
+from reinforcement_learning_agent import ReinforcementLearningAgent,ReinforcementLearningAgentCMAB
 from task import Task
 class Vehicle:
-    def __init__(self, id, x, y, speed, direction, frequency):
+    def __init__(self, id, x, y, speed, direction, frequency,agent_model="default"):
         self.id = id
         self.x = x
         self.y = y
@@ -17,7 +17,11 @@ class Vehicle:
         self.unfinished_offload_tasks = []
         self.undecided_tasks = []
         self.finished_tasks = []
-        self.agent = ReinforcementLearningAgent(self)
+        if(agent_model=="default"):
+            self.agent = ReinforcementLearningAgent(self)
+        elif(agent_model=="CMAB"):
+            self.agent = ReinforcementLearningAgentCMAB(self)
+
        
         
  
