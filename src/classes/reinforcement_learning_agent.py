@@ -4,7 +4,7 @@ import numpy as np
 class ReinforcementLearningAgent():
     alpha = 0.1
     gamma = 0.9
-    epsilon =  0.5 # Hadi test
+    epsilon =  1.0 # Hadi test
     epsilon_min = 0.05
     epsilon_decay = None
 
@@ -31,7 +31,7 @@ class ReinforcementLearningAgent():
 
         
     def set_epsilon_decay(number_of_iter):
-        ReinforcementLearningAgent.epsilon_decay = ReinforcementLearningAgent.epsilon/(number_of_iter/2)
+        ReinforcementLearningAgent.epsilon_decay = ReinforcementLearningAgent.epsilon/(2*(number_of_iter/3))
 
     
     def discretize_task_size(self, task_size):

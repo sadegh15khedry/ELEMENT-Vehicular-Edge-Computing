@@ -3,7 +3,8 @@ import pandas as pd
 
 def find_zeros(q_table_path):
     q_table = np.load(q_table_path+'.npy')
-    # print(q_table)
+
+    print(q_table)
     indices = np.argwhere(q_table==0)
     df = pd.DataFrame(indices, columns=['task sizes state', 'execution cycles state', 'queue state','distance state', 'action'])
     return df
