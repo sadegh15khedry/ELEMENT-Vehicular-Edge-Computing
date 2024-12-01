@@ -44,6 +44,9 @@ class Simulation:
         ReinforcementLearningAgent.set_epsilon_decay(self.max_iterations)
         if self.mode == 'test' or self.mode == "test_with_q_table_update":
             ReinforcementLearningAgent.epsilon = 0
+            if(self.mode=="test_with_q_table_update"):
+                ReinforcementLearningAgent.epsilon = ReinforcementLearningAgent.epsilon_min
+
             self.load_q_table()
         # print("Running simulation stated!")
         self.start_time = time.time()
