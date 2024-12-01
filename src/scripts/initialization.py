@@ -30,7 +30,7 @@ def initialize_vehicles(vehicle_file_path,agent_mode):
     for vehicle_config in config['vehicles']:
         vehicle = Vehicle(vehicle_config['id'], vehicle_config['x'], vehicle_config['y'],
                                 vehicle_config['speed'], vehicle_config['direction'], vehicle_config['frequency'],agent_mode)
-        print(f"vehicle id: {vehicle.id} x: {vehicle.x} y: {vehicle.y} speed: {vehicle.speed}, direction: {vehicle.direction}")
+        print(f"vehicle id: {vehicle.id} x: {vehicle.x} y: {vehicle.y} speed: {vehicle.speed}, direction: {vehicle.direction}, agent:{agent_mode}")
         vehicles.append(vehicle)
 
         print(f"Initialized {len(vehicles)} vehicles.")

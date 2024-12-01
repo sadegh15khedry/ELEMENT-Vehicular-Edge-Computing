@@ -20,6 +20,7 @@ class Vehicle:
         if(agent_model=="default"):
             self.agent = ReinforcementLearningAgent(self)
         elif(agent_model=="CMAB"):
+            print("CMAB agent created")
             self.agent = ReinforcementLearningAgentCMAB(self)
 
        

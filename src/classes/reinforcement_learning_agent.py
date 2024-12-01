@@ -147,6 +147,21 @@ class ReinforcementLearningAgent():
 
 class ReinforcementLearningAgentCMAB(ReinforcementLearningAgent):
         
+    def __init__(self, vehicle):
+        # RL hyperparameters
+
+        
+        # self.updated_state_indices_list = []
+        # self.not_updated_state_indices_list = []
+        # self.state_indices_list = []
+        # self.actions_list = []
+        # self.tasks_list = []
+        print("CMAB confirmed!")
+        self.counter = 0
+        self.history = []
+        
+        self.vehicle = vehicle
+        
     def choose_action(self, task, queue_length,distance):#state_indices
         
         self.counter += 1
@@ -162,6 +177,7 @@ class ReinforcementLearningAgentCMAB(ReinforcementLearningAgent):
         # self.prvious_state_indices = state_indices
         # print("want to choose an action:")
         print("epsilon is: " , ReinforcementLearningAgent.epsilon)   
+        print("CMAB method")
         if np.random.rand() < ReinforcementLearningAgent.epsilon:
             print("randomly!")
             action = np.random.choice(ReinforcementLearningAgent.actions)
