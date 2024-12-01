@@ -121,6 +121,7 @@ class ReinforcementLearningAgent():
     
     def update_q_table(self, before_state_indices, before_task, before_action, after_state_indices):
         # print("To calculate reward----> Vehicle->",before_task.vehicle.id,"  Task:",before_task.id, "Response time:",before_task.response_time, "   Energy:",before_task.energy, " , Before state indices:",before_state_indices)
+        print("updating Q table")
         reward = -0.5*(before_task.response_time)- 0.5 * before_task.energy  # negative reward for execution time
         current_q = ReinforcementLearningAgent.q_table[before_state_indices][before_action]
         max_future_q = np.max(ReinforcementLearningAgent.q_table[after_state_indices])
