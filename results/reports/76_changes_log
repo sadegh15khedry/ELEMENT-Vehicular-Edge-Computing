@@ -1,0 +1,2 @@
+--epsilon decay rate changed to following:
+    ReinforcementLearningAgent.epsilon_decay = ReinforcementLearningAgent.epsilon/(2*(number_of_iter/3))
