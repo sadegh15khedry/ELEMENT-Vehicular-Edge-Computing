@@ -199,7 +199,7 @@ class ReinforcementLearningAgentCMAB(ReinforcementLearningAgent):
     
     def update_q_table(self, before_state_indices, before_task, before_action):
         # print("To calculate reward----> Vehicle->",before_task.vehicle.id,"  Task:",before_task.id, "Response time:",before_task.response_time, "   Energy:",before_task.energy, " , Before state indices:",before_state_indices)
-        reward = -0.5*(before_task.response_time)- 0.5 * before_task.energy  # negative reward for execution time
+        reward = -0.001*(before_task.response_time)- 0.999 * before_task.energy  # negative reward for execution time
         current_q = ReinforcementLearningAgent.q_table[before_state_indices][before_action]
         new_q = current_q + ReinforcementLearningAgent.alpha * (reward - current_q)
         ReinforcementLearningAgent.q_table[before_state_indices][before_action] = new_q
