@@ -32,7 +32,7 @@ class ReinforcementLearningAgent():
 
         
     def set_epsilon_decay(number_of_iter):
-        ReinforcementLearningAgent.epsilon_decay = ReinforcementLearningAgent.epsilon/(2*(number_of_iter/3))
+        ReinforcementLearningAgent.epsilon_decay = 100*ReinforcementLearningAgent.epsilon/(2*(number_of_iter/3))
 
     
     def discretize_task_size(self, task_size):
